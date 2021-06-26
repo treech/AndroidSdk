@@ -3,9 +3,6 @@ apply plugin: 'signing'
 
 Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
-localProperties.each { name, value ->
-    project.ext[name] = value
-}
 
 def mavenUsername = localProperties.getProperty("sonatype.username")
 def mavenPassword = localProperties.getProperty("sonatype.password")
@@ -69,7 +66,7 @@ def pomConfig = {
     }
     developers {
         developer {
-            id 'treech'
+            id 'yeguoqiang'
             name 'treech'
             email 'yeguoqiang6@outlook.com'
         }
