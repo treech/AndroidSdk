@@ -1,0 +1,199 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+localProperties.each { name, value ->
+    project.ext[name] = value
+}
+
+def mavenUsername = localProperties.getProperty("sonatype.username")
+def mavenPassword = localProperties.getProperty("sonatype.password")
+
+task binaryJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar) {
+
+    archiveBaseName = project.archiveBaseName
+    archiveVersion = project.publishVersion
+
+    def javaClassDir = [project.buildDir.absolutePath + "/intermediates/javac/release/classes"]
+    def kotlinClassDir = [project.buildDir.absolutePath + "/tmp/kotlin-classes/release"]
+    from javaClassDir, kotlinClassDir
+
+    exclude "**/BuildConfig.class"
+    exclude "**/R.class"
+    exclude "**/R\$*.class"
+}
+
+task sourcesJar(dependsOn: ['assembleRelease'], type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveBaseName = project.archiveBaseName
+    archiveVersion = project.publishVersion
+    archiveClassifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier = 'javadoc'
+    archiveBaseName = project.archiveBaseName
+    archiveVersion = project.publishVersion
+    from javadoc.destinationDir
+}
+
+tasks.withType(Javadoc) {
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('docencoding', 'UTF-8')
+    options.addStringOption('charset', 'UTF-8')
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "AndroidSdk"
+        }
+    }
+    developers {
+        developer {
+            id 'treech'
+            name 'treech'
+            email 'yeguoqiang6@outlook.com'
+        }
+    }
+    scm {
+        url project.webUrl
+        connection = "scm:git:${project.webUrl}"
+        developerConnection = "scm:git:${project.webUrl}"
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId project.groupId
+            artifactId project.artifactId
+            version project.publishVersion
+
+            afterEvaluate {
+                artifact("${project.buildDir.absolutePath}/outputs/aar/${project.aarArchiveName}.aar")
+                artifact(sourcesJar)
+                artifact(javadocJar)
+            }
+
+            pom {
+                packaging 'aar'
+                name = project.archiveBaseName
+                description = project.desc
+                // If your project has a dedicated site, use its URL here
+                url = project.webUrl
+                withXml {
+                    def root = asNode()
+                    root.appendNode('description', project.desc)
+                    root.appendNode('name', project.name)
+                    root.appendNode('url', project.webUrl)
+
+                    // Define this explicitly if using implementation or api configurations
+                    def dependenciesNode = asNode().getAt('dependencies')[0] ?: asNode().appendNode('dependencies')
+
+                    configurations.compile.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included.
+                        if (it.name != 'unspecified') {
+                            println("compile $it.group:$it.name:$it.version")
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'compile')
+                        }
+                    }
+
+                    configurations.implementation.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included.
+                        if (it.name != 'unspecified') {
+                            println("implementation $it.group:$it.name:$it.version")
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'compile')
+                        }
+                    }
+
+                    configurations.api.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included.
+                        if (it.name != 'unspecified') {
+                            println("api $it.group:$it.name:$it.version")
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'compile')
+                        }
+                    }
+
+                    configurations.compileOnly.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included.
+                        if (it.name != 'unspecified') {
+                            println("compileOnly $it.group:$it.name:$it.version")
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'provided')
+                        }
+                    }
+
+                    configurations.runtimeOnly.allDependencies.each {
+                        // Ensure dependencies such as fileTree are not included.
+                        if (it.name != 'unspecified') {
+                            println("runtimeOnly $it.group:$it.name:$it.version")
+                            def dependencyNode = dependenciesNode.appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                            dependencyNode.appendNode('scope', 'runtime')
+                        }
+                    }
+
+                    root.children().last() + pomConfig
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = project.archiveBaseName
+
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            // You only need this if you want to publish snapshots, otherwise just set the URL
+            // to the release repo directly
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            // The username and password we've fetched earlier
+            credentials {
+                username mavenUsername
+                password mavenPassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications
+}
