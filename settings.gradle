@@ -1,3 +1,4 @@
 rootProject.name = "AndroidSdk"
 include ':app'
 include ':common'
+include ':loadX'

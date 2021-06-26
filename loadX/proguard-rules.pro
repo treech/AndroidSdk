@@ -19,7 +19,3 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
-
-# loadX
--dontwarn com.treech.sdk.loadX.**
--keep class com.treech.sdk.loadX.** {*;}

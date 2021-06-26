@@ -1,4 +1,4 @@
-package com.treech.sdk
+package com.treech.sdk.common
 
 import org.junit.Test
 
