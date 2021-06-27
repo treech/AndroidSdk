@@ -44,7 +44,7 @@ ext {
     groupId = 'com.treech.sdk'
     description = 'Common sdk for android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
-    authorEmail = 'yeguoqiang@outlook.com'
+    authorEmail = 'yeguoqiang6@outlook.com'
     license = 'MIT'
     version = "${versionMajor}.${versionMinor}.${versionPatch}"
 }
