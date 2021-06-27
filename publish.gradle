@@ -3,106 +3,123 @@ apply plugin: 'signing'
 
 Properties localProperties = new Properties()
 localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+localProperties.each { name, value ->
+    project.ext[name] = value
+}
 
 def mavenUsername = localProperties.getProperty("sonatype.username")
 def mavenPassword = localProperties.getProperty("sonatype.password")
+def projectGroupId = project.ext.groupId
+def projectArtifactId = project.getName()
+def projectVersionName = project.ext.has('version') ? project.ext.getProperty('version') : project.extensions.findByName("android")["defaultConfig"].versionName
+def projectDescription = project.ext.has('description') ? project.ext.getProperty('description') : null
+def projectGitUrl = project.ext.has('gitUrl') ? project.ext.getProperty('gitUrl') : null
+def projectLicense = project.ext.has('license') ? project.ext.getProperty('license') : null
+def projectLicenseUrl = projectLicense ? "https://opensource.org/licenses/${projectLicense.toString().replace(" ", "-")} " : null
 
-task binaryJar(dependsOn: ['compileReleaseJavaWithJavac'], type: Jar) {
+def developerAuthorId = mavenUsername
+def developerAuthorName = mavenUsername
+def developerAuthorEmail = project.ext.has('authorEmail') ? project.ext.getProperty('authorEmail') : null
 
-    archiveBaseName = project.archiveBaseName
-    archiveVersion = project.publishVersion
+println("${mavenUsername} ${mavenPassword} - ${projectGroupId}:${projectArtifactId}:${projectVersionName}")
+println("${projectLicense} - ${projectLicenseUrl}")
 
-    def javaClassDir = [project.buildDir.absolutePath + "/intermediates/javac/release/classes"]
-    def kotlinClassDir = [project.buildDir.absolutePath + "/tmp/kotlin-classes/release"]
-    from javaClassDir, kotlinClassDir
-
-    exclude "**/BuildConfig.class"
-    exclude "**/R.class"
-    exclude "**/R\$*.class"
+if (!mavenUsername || !mavenPassword || !projectGroupId || !projectArtifactId || !projectVersionName) {
+    println('错误：缺少参数')
+    return
+}
+if (!projectDescription || !projectGitUrl || !projectLicense || !projectLicenseUrl || !developerAuthorId || !developerAuthorName || !developerAuthorEmail) {
+    println('警告：缺少可选信息')
 }
 
-task sourcesJar(dependsOn: ['assembleRelease'], type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    archiveBaseName = project.archiveBaseName
-    archiveVersion = project.publishVersion
-    archiveClassifier = 'sources'
+def isAndroidProject = project.hasProperty('android')
+if (isAndroidProject) {
+    println("使用Android工程方式发布")
+    // Android 工程
+    task androidJavadocs(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+    task javadocsJar(type: Jar, dependsOn: androidJavadocs) {
+        archiveClassifier.set("javadoc")
+        from androidJavadocs.destinationDir
+    }
+    task sourcesJar(type: Jar) {
+        archiveClassifier.set("sources")
+        from android.sourceSets.main.java.srcDirs
+    }
+} else {
+    println("使用Java工程方式发布")
+    // Java 工程
+    task javadocsJar(type: Jar, dependsOn: javadoc) {
+        archiveClassifier.set("javadoc")
+        from javadoc.destinationDir
+    }
+    task sourcesJar(type: Jar) {
+        archiveClassifier.set("sources")
+        from sourceSets.main.allJava
+    }
 }
 
-task javadoc(type: Javadoc) {
-    failOnError false
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    archiveClassifier = 'javadoc'
-    archiveBaseName = project.archiveBaseName
-    archiveVersion = project.publishVersion
-    from javadoc.destinationDir
-}
-
-tasks.withType(Javadoc) {
-    options.addStringOption('encoding', 'UTF-8')
-    options.addStringOption('docencoding', 'UTF-8')
-    options.addStringOption('charset', 'UTF-8')
+tasks.withType(Javadoc).all {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/8/docs/api"
+        if (isAndroidProject) {
+            linksOffline "http://d.android.com/reference", "${android.sdkDirectory}/docs/reference"
+        }
+        failOnError = false
+    }
+    enabled = false
 }
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-// Create the pom configuration:
-def pomConfig = {
-    licenses {
-        license {
-            name "The Apache Software License, Version 2.0"
-            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "AndroidSdk"
-        }
-    }
-    developers {
-        developer {
-            id 'yeguoqiang'
-            name 'treech'
-            email 'yeguoqiang6@outlook.com'
-        }
-    }
-    scm {
-        url project.webUrl
-        connection = "scm:git:${project.webUrl}"
-        developerConnection = "scm:git:${project.webUrl}"
-    }
+    archives javadocsJar, sourcesJar
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
-            groupId project.groupId
-            artifactId project.artifactId
-            version project.publishVersion
-
-            afterEvaluate {
-                artifact("${project.buildDir.absolutePath}/outputs/aar/${project.aarArchiveName}.aar")
-                artifact(sourcesJar)
-                artifact(javadocJar)
+        aar(MavenPublication) {
+            groupId = projectGroupId
+            artifactId = projectArtifactId
+            version = projectVersionName
+            // Tell maven to prepare the generated "*.aar" file for publishing
+            if (isAndroidProject){
+                artifact("$buildDir/outputs/aar/${project.getName()}-${version}.aar")
+            }else{
+                artifact("$buildDir/libs/${project.getName()}-${version}.jar")
             }
+            artifact javadocsJar
+            artifact sourcesJar
 
             pom {
-                packaging 'aar'
-                name = project.archiveBaseName
-                description = project.desc
+                name = projectArtifactId
+                description = projectDescription
                 // If your project has a dedicated site, use its URL here
-                url = project.webUrl
+                url = projectGitUrl
+                licenses {
+                    license {
+                        name = projectLicense
+                        url = projectLicenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id = developerAuthorId
+                        name = developerAuthorName
+                        email = developerAuthorEmail
+                    }
+                }
+                // Version control info, if you're using GitHub, follow the format as seen here
+                scm {
+                    connection = "scm:git:${projectGitUrl}"
+                    developerConnection = "scm:git:${projectGitUrl}"
+                    url = projectGitUrl
+                }
                 withXml {
-                    def root = asNode()
-                    root.appendNode('description', project.desc)
-                    root.appendNode('name', project.name)
-                    root.appendNode('url', project.webUrl)
-
                     // Define this explicitly if using implementation or api configurations
                     def dependenciesNode = asNode().getAt('dependencies')[0] ?: asNode().appendNode('dependencies')
 
@@ -165,8 +182,6 @@ publishing {
                             dependencyNode.appendNode('scope', 'runtime')
                         }
                     }
-
-                    root.children().last() + pomConfig
                 }
             }
         }
@@ -174,7 +189,7 @@ publishing {
 
     repositories {
         maven {
-            name = project.archiveBaseName
+            name = projectArtifactId
 
             def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"

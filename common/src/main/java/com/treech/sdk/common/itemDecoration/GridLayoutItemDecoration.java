@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.jetbrains.annotations.NotNull;
-
 public class GridLayoutItemDecoration extends RecyclerView.ItemDecoration {
 
     /**
@@ -59,7 +57,7 @@ public class GridLayoutItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void getItemOffsets(@NonNull @NotNull Rect outRect, @NonNull @NotNull View view, @NonNull @NotNull RecyclerView parent, @NonNull @NotNull RecyclerView.State state) {
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         GridLayoutManager layoutManager = (GridLayoutManager) parent.getLayoutManager();
         final GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
         final int position = parent.getChildAdapterPosition(view);
@@ -89,7 +87,7 @@ public class GridLayoutItemDecoration extends RecyclerView.ItemDecoration {
             //判断是否在第一排
             if (spanGroupIndex == 0) {//第一排的需要left
                 outRect.left = mLeftRightPadding;
-            }else if (spanGroupIndex == maxSpanGroupIndex) {//最后一排需要right
+            } else if (spanGroupIndex == maxSpanGroupIndex) {//最后一排需要right
                 outRect.right = mLeftRightPadding;
             }
             outRect.right = mLeftRight;
