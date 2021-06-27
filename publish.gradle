@@ -38,6 +38,9 @@ if (isAndroidProject) {
     // Android 工程
     task androidJavadocs(type: Javadoc) {
         source = android.sourceSets.main.java.srcDirs
+        //排除annotation包
+        exclude '**/pom.xml'
+        exclude '**/proguard_annotations.pro'
         classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     }
     task javadocsJar(type: Jar, dependsOn: androidJavadocs) {
@@ -73,7 +76,7 @@ tasks.withType(Javadoc).all {
         }
         failOnError = false
     }
-    enabled = false
+//    enabled = false
 }
 
 artifacts {
