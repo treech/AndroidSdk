@@ -28,6 +28,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFileName != null && output.outputFileName.endsWith('.aar')) {
+                if (variant.buildType.name == 'release') {
+                    output.outputFileName = "${project.name}-${project.ext.getProperty('version')}.aar"
+                }
+            }
+        }
+    }
 }
 
 dependencies {

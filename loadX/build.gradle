@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 1
+def versionPatch = 2
 
 android {
     compileSdkVersion 30
@@ -26,6 +26,16 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFileName != null && output.outputFileName.endsWith('.aar')) {
+                if (variant.buildType.name == 'release') {
+                    output.outputFileName = "${project.name}-${project.ext.getProperty('version')}.aar"
+                }
+            }
         }
     }
 }
