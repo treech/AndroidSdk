@@ -41,7 +41,7 @@ dependencies {
 }
 
 ext {
-    groupId = 'com.treech.sdk'
+    groupId = 'io.github.treech'
     description = 'Common sdk for android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'

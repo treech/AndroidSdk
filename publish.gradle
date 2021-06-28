@@ -76,7 +76,7 @@ tasks.withType(Javadoc).all {
         }
         failOnError = false
     }
-//    enabled = false
+    enabled = false
 }
 
 artifacts {

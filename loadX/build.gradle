@@ -39,7 +39,7 @@ dependencies {
 }
 
 ext {
-    groupId = 'com.treech.sdk'
+    groupId = 'io.github.treech'
     description = 'Android library to show most common state templates like loading, empty, error etc.'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'
