@@ -77,7 +77,7 @@ int32_t convertArgbToInt(ARGB argb);
 
 void convertIntToArgb(uint32_t pixel, ARGB* argb);
 
-void initBeautiMatrix(uint32_t *pix, int width, int height);
+void initBeautyMatrix(uint32_t *pix, int width, int height);
 
 void initSkinMatrix(uint32_t *pix, int width, int height);
 

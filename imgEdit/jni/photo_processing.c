@@ -212,7 +212,7 @@ Java_io_github_treech_PhotoProcess_handleSmoothAndWhiteSkin(JNIEnv *env, jobject
     }
 
     LOGI("Bitmap smooth and whiteskin handle");
-    initBeautiMatrix((uint32_t *) pixels, info.width, info.height);
+    initBeautyMatrix((uint32_t *) pixels, info.width, info.height);
 
     LOGI("Bitmap smooth = %f and whiteSkin = %f", smoothValue,whiteValue);
 
@@ -248,7 +248,7 @@ Java_io_github_treech_PhotoProcess_handleSmooth(JNIEnv *env, jobject obj, jobjec
 
     LOGI("AndroidBitmap_smooth handle");
 
-    initBeautiMatrix((uint32_t *) pixels, info.width, info.height);
+    initBeautyMatrix((uint32_t *) pixels, info.width, info.height);
     setSmooth((uint32_t *) pixels, smoothValue, info.width, info.height);
 
     AndroidBitmap_unlockPixels(env, bitmap);
@@ -278,7 +278,7 @@ Java_io_github_treech_PhotoProcess_handleWhiteSkin(JNIEnv *env, jobject obj, job
     }
 
     LOGI("AndroidBitmap_whiteSkin handle");
-    initBeautiMatrix((uint32_t *) pixels, info.width, info.height);
+    initBeautyMatrix((uint32_t *) pixels, info.width, info.height);
 
     LOGI("AndroidBitmap_whiteSkin whiteValue = %f", whiteValue);
     setWhiteSkin((uint32_t *) pixels, whiteValue, info.width, info.height);
@@ -438,7 +438,7 @@ void freeMatrix() {
     }
 }
 
-void initBeautiMatrix(uint32_t *pix, int width, int height) {
+void initBeautyMatrix(uint32_t *pix, int width, int height) {
     if (mImageData_rgb == NULL)
         mImageData_rgb = (uint32_t *)malloc(sizeof(uint32_t)*width * height);
 
