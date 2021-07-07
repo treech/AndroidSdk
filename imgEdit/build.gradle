@@ -29,19 +29,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ndk {
-                abiFilters 'armeabi-v7a', 'arm64-v8a'
-            }
-        }
-
-        debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            ndk {
-                abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
-            }
         }
     }
 
