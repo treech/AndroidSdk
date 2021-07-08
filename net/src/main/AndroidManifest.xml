@@ -2,4 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.treech.net">
 
+    <application>
+        <provider
+            android:name="io.github.treech.net.utils.ContextProviderInitializer"
+            android:authorities="${applicationId}.contextprovider"
+            android:exported="false" />
+    </application>
 </manifest>
