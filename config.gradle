@@ -12,9 +12,9 @@ ext {
 
             //network
             "okhttp"                                      : "com.squareup.okhttp3:okhttp:4.9.1",
-            "retrofit"                                    : "com.squareup.retrofit2:retrofit:2.4.0",
-            "converter-gson"                              : "com.squareup.retrofit2:converter-gson:2.4.0",
-            "adapter-rxjava2"                             : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
+            "retrofit"                                    : "com.squareup.retrofit2:retrofit:2.9.0",
+            "converter-gson"                              : "com.squareup.retrofit2:converter-gson:2.9.0",
+            "adapter-rxjava2"                             : "com.squareup.retrofit2:adapter-rxjava2:2.8.1",
             "retrofit-url-manager"                        : "me.jessyan:retrofit-url-manager:1.4.0",
             //json解析
             "gson"                                        : "com.google.code.gson:gson:2.8.5",
