@@ -6,9 +6,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import io.github.treech.net.log.CharacterHandler;
-import io.github.treech.net.log.DefaultFormatPrinter;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -17,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.github.treech.net.log.CharacterHandler;
+import io.github.treech.net.log.DefaultFormatPrinter;
 import io.github.treech.net.utils.ZipHelper;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -33,12 +32,14 @@ import okio.BufferedSource;
  * ================================================
  */
 public class RequestInterceptor implements Interceptor {
+
+    GlobalHttpHandler mHandler;
     DefaultFormatPrinter mPrinter;
     Level mPrintLevel;
 
-    public RequestInterceptor(DefaultFormatPrinter printer,Level printLevel) {
-        this.mPrinter=printer;
-        this.mPrintLevel =printLevel;
+    public RequestInterceptor(DefaultFormatPrinter printer, Level printLevel) {
+        this.mPrinter = printer;
+        this.mPrintLevel = printLevel;
     }
 
     /**
@@ -169,6 +170,10 @@ public class RequestInterceptor implements Interceptor {
                         isSuccessful, code, header, segmentList, message, url);
             }
 
+        }
+
+        if (mHandler != null) {//这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
+            return mHandler.onHttpResultResponse(bodyString, chain, originalResponse);
         }
 
         return originalResponse;

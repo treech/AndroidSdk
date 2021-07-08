@@ -9,7 +9,7 @@ public interface Logger {
     Logger DEFAULT = new Logger() {
         @Override
         public void log(int level, String tag, String message) {
-            Platform.get().log(level, message, null);
+            Platform.get().log(message, level, null);
         }
     };
 }

@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -22,6 +23,7 @@ import io.github.treech.net.config.GlobalConfigModule;
 import io.github.treech.net.config.ManifestParser;
 import io.github.treech.net.cookie.CookieJarImpl;
 import io.github.treech.net.cookie.store.PersistentCookieStore;
+import io.github.treech.net.interceptor.GlobalHttpHandler;
 import io.github.treech.net.interceptor.RequestInterceptor;
 import io.github.treech.net.log.DefaultFormatPrinter;
 import io.github.treech.net.utils.ContextProvider;
@@ -31,6 +33,7 @@ import okhttp3.ConnectionPool;
 import okhttp3.Dispatcher;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import okhttp3.internal.Util;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -92,6 +95,7 @@ public class RetrofitClient {
         String customBaseUrl = globalConfigModule.getBaseUrl();
         List<Interceptor> customInterceptors = globalConfigModule.getInterceptors();
         RequestInterceptor.Level logLevel = globalConfigModule.getLevel();
+        GlobalHttpHandler globalHttpHandler = globalConfigModule.getGlobalHttpHandler();
 
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory();
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
@@ -103,9 +107,19 @@ public class RetrofitClient {
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .dispatcher(new Dispatcher(new ThreadPoolExecutor(0, Integer.MAX_VALUE, 60, TimeUnit.SECONDS,
-                        new SynchronousQueue<>(), Util.threadFactory("AI Executor", false))))
+                        new SynchronousQueue<>(), Util.threadFactory("AI Executor", false))))//为 OkHttp 设置默认的线程池
                 .connectionPool(new ConnectionPool(8, 15, TimeUnit.SECONDS));
 
+        if (globalHttpHandler != null) {
+            builder.addInterceptor(new Interceptor() {
+                @Override
+                public Response intercept(Chain chain) throws IOException {
+                    return chain.proceed(globalHttpHandler.onHttpRequestBefore(chain, chain.request()));
+                }
+            });
+        }
+
+        //如果外部提供了 Interceptor 的集合则遍历添加
         if (customInterceptors != null && customInterceptors.size() > 0) {
             for (Interceptor interceptor : customInterceptors) {
                 builder.addInterceptor(interceptor);
