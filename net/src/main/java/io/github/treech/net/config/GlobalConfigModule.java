@@ -10,7 +10,6 @@ import okhttp3.Interceptor;
 public class GlobalConfigModule {
 
     private final String mBaseUrl;
-
     private final List<Interceptor> mInterceptors;
     private final RequestInterceptor.Level mLevel;
     private final GlobalHttpHandler mGlobalHttpHandler;
@@ -32,6 +31,7 @@ public class GlobalConfigModule {
             if (baseUrl == null) {
                 throw new NullPointerException("baseUrl can not be null.");
             }
+            this.baseUrl = baseUrl;
             return this;
         }
 
