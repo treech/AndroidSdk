@@ -23,3 +23,10 @@
 # loadX
 -dontwarn com.treech.sdk.loadX.**
 -keep class com.treech.sdk.loadX.** {*;}
+
+# net
+-keep public class * implements io.github.treech.net.config.ConfigModule
+-keep class io.github.treech.net.extend.HttpResponseHandler
+-keep class io.github.treech.net.extend.ErrorHandlerSingleObserver
+-keep class io.github.treech.net.extend.BaseResponse
+-keep class io.github.treech.net.RetrofitClient

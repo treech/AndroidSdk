@@ -35,8 +35,13 @@ android {
 
 dependencies {
 
-    implementation project(':common')
-    implementation project(':loadX')
+//    implementation project(':common')
+//    implementation project(':loadX')
+//    implementation project(':net')
+    implementation "io.github.treech:common:0.0.2"
+    implementation "io.github.treech:loadX:0.0.3"
+    implementation "io.github.treech:imgEdit:0.0.2"
+    implementation "io.github.treech:net:0.0.4"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.5.0'
