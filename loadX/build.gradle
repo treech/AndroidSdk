@@ -42,10 +42,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.annotation:annotation:1.2.0"
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation "androidx.annotation:annotation:$rootProject.ext.dependencies.annotation"
+    testImplementation "junit:junit:$rootProject.ext.dependencies.junit"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.dependencies.testJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.dependencies.testEspressoCore"
 }
 
 ext {

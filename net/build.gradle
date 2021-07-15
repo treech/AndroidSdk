@@ -53,16 +53,16 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation rootProject.ext.dependencies["core-ktx"]
-    api rootProject.ext.dependencies["gson"]
-    api rootProject.ext.dependencies["okhttp"]
-    api rootProject.ext.dependencies["retrofit"]
-    api rootProject.ext.dependencies["converter-gson"]
-    api rootProject.ext.dependencies["adapter-rxjava2"]
-    api rootProject.ext.dependencies["retrofit-url-manager"]
-    testImplementation rootProject.ext.dependencies["junit"]
-    androidTestImplementation rootProject.ext.dependencies["test-junit"]
-    androidTestImplementation rootProject.ext.dependencies["test-espresso-core"]
+    implementation "androidx.core:core-ktx:$rootProject.ext.dependencies.coreKtx"
+    api "com.google.code.gson:gson:$rootProject.ext.dependencies.gson"
+    api "com.squareup.okhttp3:okhttp:$rootProject.ext.dependencies.okhttp"
+    api "com.squareup.retrofit2:retrofit:$rootProject.ext.dependencies.retrofit"
+    api "com.squareup.retrofit2:converter-gson:$rootProject.ext.dependencies.converterGson"
+    api "com.squareup.retrofit2:adapter-rxjava2:$rootProject.ext.dependencies.adapterRxjava2"
+    api "me.jessyan:retrofit-url-manager:$rootProject.ext.dependencies.retrofitUrlManager"
+    testImplementation "junit:junit:$rootProject.ext.dependencies.junit"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.dependencies.testJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.dependencies.testEspressoCore"
 }
 
 ext {
