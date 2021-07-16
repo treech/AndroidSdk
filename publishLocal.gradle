@@ -1,0 +1,14 @@
+apply plugin: 'maven'
+
+def ANDROID_SDK_PATH = "D:\\code\\android\\LocalMaven"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://" + ANDROID_SDK_PATH)
+            pom.groupId = project.ext.groupId
+            pom.artifactId = project.getName()
+            pom.version = project.ext.getProperty('version')
+        }
+    }
+}
