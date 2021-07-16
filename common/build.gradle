@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 def versionMajor = 0
 def versionMinor = 0
@@ -38,13 +40,36 @@ android {
             }
         }
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:$rootProject.ext.dependencies.coreKtx"
+    //lifecycle
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.ext.dependencies.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.ext.dependencies.lifecycle"
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.ext.dependencies.lifecycleExt"
+    // viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ext.dependencies.lifecycle"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.ext.dependencies.fragmentKtx"
+    // liveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.dependencies.lifecycle"
+    //gson
+    implementation "com.google.code.gson:gson:$rootProject.ext.dependencies.gson"
+    //recyclerview
     implementation "androidx.recyclerview:recyclerview:$rootProject.ext.dependencies.recyclerview"
+    //material
     implementation "com.google.android.material:material:$rootProject.ext.dependencies.material"
+    //net
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.ext.dependencies.okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.dependencies.retrofit"
 
     testImplementation "junit:junit:$rootProject.ext.dependencies.junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.dependencies.testJunit"
