@@ -1,36 +1,18 @@
 package io.github.treech.common.ext.util
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Application
 import android.content.ClipData
 import android.content.Context
 import android.provider.Settings
-import android.text.Html
-import android.text.Spanned
 import android.text.TextUtils
 import android.view.View
-import io.github.treech.common.ext.view.clickNoRepeat
+import android.view.inputmethod.InputMethodManager
+import java.io.BufferedReader
+import java.io.FileReader
+import java.io.IOException
 import java.lang.reflect.InvocationTargetException
-
-fun getApplicationByReflect(): Application {
-    try {
-        @SuppressLint("PrivateApi") val activityThread = Class.forName("android.app.ActivityThread")
-        val thread = activityThread.getMethod("currentActivityThread").invoke(null)
-        val app = activityThread.getMethod("getApplication").invoke(thread)
-            ?: throw NullPointerException("you should init first")
-        return app as Application
-    } catch (e: NoSuchMethodException) {
-        e.printStackTrace()
-    } catch (e: IllegalAccessException) {
-        e.printStackTrace()
-    } catch (e: InvocationTargetException) {
-        e.printStackTrace()
-    } catch (e: ClassNotFoundException) {
-        e.printStackTrace()
-    }
-    throw NullPointerException("you should init first")
-}
-
 
 /**
  * 获取屏幕宽度
@@ -60,6 +42,35 @@ inline fun <reified T> T?.notNull(notNullAction: (T) -> Unit, nullAction: () -> 
  */
 fun <T> Any?.notNull(f: () -> T, t: () -> T): T {
     return if (this != null) f() else t()
+}
+
+fun List<*>?.isNull(): Boolean {
+    return this?.isEmpty() ?: true
+}
+
+fun List<*>?.isNotNull(): Boolean {
+    return this != null && this.isNotEmpty()
+}
+
+/**
+ * 根据索引获取集合的child值
+ * @receiver List<T>?
+ * @param position Int
+ * @return T?
+ */
+inline fun <reified T> List<T>?.getChild(position: Int): T? {
+    //如果List为null 返回null
+    return if (this == null) {
+        null
+    } else {
+        //如果position大于集合的size 返回null
+        if (position + 1 > this.size) {
+            null
+        } else {
+            //返回正常数据
+            this[position]
+        }
+    }
 }
 
 /**
@@ -103,6 +114,51 @@ fun Context.copyToClipboard(text: String, label: String = "CommonExt") {
 }
 
 /**
+ * 获取进程号对应的进程名
+ *
+ * @param pid 进程号
+ * @return 进程名
+ */
+fun getProcessName(pid: Int): String? {
+    var reader: BufferedReader? = null
+    try {
+        reader = BufferedReader(FileReader("/proc/$pid/cmdline"))
+        var processName = reader.readLine()
+        if (!TextUtils.isEmpty(processName)) {
+            processName = processName.trim { it <= ' ' }
+        }
+        return processName
+    } catch (throwable: Throwable) {
+        throwable.printStackTrace()
+    } finally {
+        try {
+            reader?.close()
+        } catch (exception: IOException) {
+            exception.printStackTrace()
+        }
+
+    }
+    return null
+}
+
+/**
+ * 隐藏软键盘
+ */
+fun hideSoftKeyboard(activity: Activity?) {
+    activity?.let { act ->
+        val view = act.currentFocus
+        view?.let {
+            val inputMethodManager =
+                act.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(
+                view.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }
+    }
+}
+
+/**
  * 检查是否启用无障碍服务
  */
 fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
@@ -122,39 +178,23 @@ fun Context.checkAccessibilityServiceEnabled(serviceName: String): Boolean {
     return result
 }
 
-/**
- * 设置点击事件
- * @param views 需要设置点击事件的view
- * @param onClick 点击触发的方法
- */
-fun setOnclick(vararg views: View?, onClick: (View) -> Unit) {
-    views.forEach {
-        it?.setOnClickListener { view ->
-            onClick.invoke(view)
-        }
+fun getApplicationByReflect(): Application {
+    try {
+        @SuppressLint("PrivateApi") val activityThread = Class.forName("android.app.ActivityThread")
+        val thread = activityThread.getMethod("currentActivityThread").invoke(null)
+        val app = activityThread.getMethod("getApplication").invoke(thread)
+            ?: throw NullPointerException("you should init first")
+        return app as Application
+    } catch (e: NoSuchMethodException) {
+        e.printStackTrace()
+    } catch (e: IllegalAccessException) {
+        e.printStackTrace()
+    } catch (e: InvocationTargetException) {
+        e.printStackTrace()
+    } catch (e: ClassNotFoundException) {
+        e.printStackTrace()
     }
-}
-
-/**
- * 设置防止重复点击事件
- * @param views 需要设置点击事件的view集合
- * @param interval 时间间隔 默认0.5秒
- * @param onClick 点击触发的方法
- */
-fun setOnclickNoRepeat(vararg views: View?, interval: Long = 500, onClick: (View) -> Unit) {
-    views.forEach {
-        it?.clickNoRepeat(interval = interval) { view ->
-            onClick.invoke(view)
-        }
-    }
-}
-
-fun String.toHtml(flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
-    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-        Html.fromHtml(this, flag)
-    } else {
-        Html.fromHtml(this)
-    }
+    throw NullPointerException("you should init first")
 }
 
 

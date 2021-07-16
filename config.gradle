@@ -34,6 +34,7 @@ ext {
 
             //widget
             material                                      : "1.4.0",
+            materialDialogs                               : "3.3.0",
 
             //test
             junit                                         : "4.13.2",

@@ -42,6 +42,7 @@ dependencies {
     implementation project(':common')
     implementation project(':loadX')
     implementation project(':net')
+    implementation "io.github.treech:common:0.0.3"
 //    implementation "io.github.treech:common:0.0.2"
 //    implementation "io.github.treech:loadX:0.0.3"
 //    implementation "io.github.treech:imgEdit:0.0.2"

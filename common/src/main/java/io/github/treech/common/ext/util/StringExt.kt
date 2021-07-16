@@ -1,5 +1,9 @@
 package io.github.treech.common.ext.util
 
+import android.os.Build
+import android.text.Html
+import android.text.Spanned
+import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import java.util.regex.Pattern
 
@@ -47,4 +51,13 @@ fun String?.isEmail(): Boolean {
  */
 fun Any?.toJson(): String {
     return Gson().toJson(this)
+}
+
+@RequiresApi(Build.VERSION_CODES.N)
+fun String.toHtml(flag: Int = Html.FROM_HTML_MODE_LEGACY): Spanned {
+    return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        Html.fromHtml(this, flag)
+    } else {
+        Html.fromHtml(this)
+    }
 }
