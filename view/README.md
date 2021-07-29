@@ -25,9 +25,9 @@
 
 ## 气泡布局
 
-1. BubblePopupWindow
-   Android 实现气泡布局/弹窗，可控制气泡尖角方向及偏移量
-   https://github.com/smuyyh/BubblePopupWindow
+1. 暂缺
+   随意变化的气泡布局、消息对话框，可定制颜色，背景、弧度、尖角弧度、边框等等
+   https://github.com/xujiaji/HappyBubble
    
 2. BubbleSeekBar
    进度变化更以可视化气泡样式呈现

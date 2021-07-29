@@ -11,14 +11,6 @@
         <attr name="rl_hideBackView" format="boolean|reference" />
     </declare-styleable>
 
-    <declare-styleable name="bubble">
-        <attr name="shadowColor" format="color" />
-        <attr name="padding" format="dimension" />
-        <attr name="strokeWidth" format="float" />
-        <attr name="cornerRadius" format="float" />
-        <attr name="halfBaseOfLeg" format="dimension" />
-    </declare-styleable>
-
     <declare-styleable name="BubbleSeekBar">
         <attr name="bsb_min" format="float|reference"/> <!--min < max, default: 0.0f-->
         <attr name="bsb_max" format="float|reference"/> <!--min < max, default: 100.0f-->
