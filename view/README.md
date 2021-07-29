@@ -23,4 +23,12 @@
 4. ScrollAwareFABBehavior
    https://github.com/ianhanniballake/cheesesquare/blob/92bcf7c8b57459051424cd512a032c12d24a41b3/app/src/main/java/com/support/android/designlibdemo/ScrollAwareFABBehavior.java
 
+## 气泡布局
 
+1. BubblePopupWindow
+   Android 实现气泡布局/弹窗，可控制气泡尖角方向及偏移量
+   https://github.com/smuyyh/BubblePopupWindow
+   
+2. BubbleSeekBar
+   进度变化更以可视化气泡样式呈现
+   https://github.com/woxingxiao/BubbleSeekBar
