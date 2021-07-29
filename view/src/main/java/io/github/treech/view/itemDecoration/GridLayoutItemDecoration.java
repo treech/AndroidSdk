@@ -1,4 +1,4 @@
-package io.github.treech.common.itemDecoration;
+package io.github.treech.view.itemDecoration;
 
 import android.graphics.Rect;
 import android.view.View;

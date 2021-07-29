@@ -1,4 +1,4 @@
-package io.github.treech.common.widget;
+package io.github.treech.view;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
