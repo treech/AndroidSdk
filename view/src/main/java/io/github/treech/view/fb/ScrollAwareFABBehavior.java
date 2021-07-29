@@ -1,4 +1,4 @@
-package io.github.treech.view;
+package io.github.treech.view.fb;
 
 import android.content.Context;
 import android.util.AttributeSet;
