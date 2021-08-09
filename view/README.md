@@ -32,3 +32,11 @@
 2. BubbleSeekBar
    进度变化更以可视化气泡样式呈现
    https://github.com/woxingxiao/BubbleSeekBar
+   
+## RoundView
+
+1. RoundTextView 圆角TextView
+   https://github.com/jpush/aurora-imui/blob/master/Android/messagelist/src/main/java/cn/jiguang/imui/view/RoundTextView.java
+
+2. 一个扩展原生控件支持圆角矩形框背景的库,可以减少相关shape资源文件使用[20210809]
+   https://github.com/H07000223/FlycoRoundView

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="round_text_view_bg_corner_radius_default">5dp</dimen>
+</resources>
