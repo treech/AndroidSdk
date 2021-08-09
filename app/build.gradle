@@ -48,6 +48,7 @@ dependencies {
     implementation project(':loadX')
     implementation project(':net')
     implementation project(':view')
+    implementation project(':imgEdit')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.ext.dependencies.coreKtx"

@@ -32,6 +32,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 
     libraryVariants.all { variant ->
@@ -67,4 +71,5 @@ ext {
     version = "${versionMajor}.${versionMinor}.${versionPatch}"
 }
 
-apply from: '../publish.gradle'
+//apply from: '../publish.gradle'
+apply from: '../publishLocal.gradle'
