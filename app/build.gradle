@@ -47,7 +47,7 @@ dependencies {
     implementation project(':common')
     implementation project(':loadX')
     implementation project(':net')
-    implementation project(':view')
+    implementation project(':ui')
     implementation project(':imgEdit')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

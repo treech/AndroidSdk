@@ -26,5 +26,10 @@
             android:text="Seekbar"
             android:textColor="?colorPrimary"
             android:textSize="20sp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            style="@style/Widget.AppCompat.CompoundButton.RadioButton"/>
     </LinearLayout>
 </ScrollView>
