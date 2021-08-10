@@ -12,160 +12,188 @@
     </declare-styleable>
 
     <declare-styleable name="BubbleSeekBar">
-        <attr name="bsb_min" format="float|reference"/> <!--min < max, default: 0.0f-->
-        <attr name="bsb_max" format="float|reference"/> <!--min < max, default: 100.0f-->
-        <attr name="bsb_progress" format="float|reference"/> <!--real time progress value, default: min-->
-        <attr name="bsb_is_float_type" format="boolean"/> <!--support for float type-->
-        <attr name="bsb_track_size" format="dimension|reference"/> <!--height of right-track(on the right of thumb), default: 2dp-->
+        <attr name="bsb_min" format="float|reference" /> <!--min < max, default: 0.0f-->
+        <attr name="bsb_max" format="float|reference" /> <!--min < max, default: 100.0f-->
+        <attr name="bsb_progress" format="float|reference" /> <!--real time progress value, default: min-->
+        <attr name="bsb_is_float_type" format="boolean" /> <!--support for float type-->
+        <attr name="bsb_track_size" format="dimension|reference" /> <!--height of right-track(on the right of thumb), default: 2dp-->
         <!--height of left-track(on the left of thumb), default: 2dp higher than right-track's height-->
-        <attr name="bsb_second_track_size" format="dimension|reference"/>
-        <attr name="bsb_thumb_radius" format="dimension|reference"/> <!--radius of thumb, default: 2dp higher than left-track's height-->
+        <attr name="bsb_second_track_size" format="dimension|reference" />
+        <attr name="bsb_thumb_radius" format="dimension|reference" /> <!--radius of thumb, default: 2dp higher than left-track's height-->
         <!--radius of thumb when be dragging, default: 2 times of left-track's height-->
-        <attr name="bsb_thumb_radius_on_dragging" format="dimension|reference"/>
-        <attr name="bsb_track_color" format="color|reference"/> <!--color of right-track, default: R.color.colorPrimary-->
-        <attr name="bsb_second_track_color" format="color|reference"/> <!--color of left-track, default: R.color.colorAccent-->
-        <attr name="bsb_thumb_color" format="color|reference"/> <!--color of thumb, default: same as left-track's color-->
-        <attr name="bsb_section_count" format="integer|reference"/> <!--shares of whole progress(max - min), default: 10-->
-        <attr name="bsb_show_section_mark" format="boolean"/> <!--show demarcation points or not, default: false-->
-        <attr name="bsb_auto_adjust_section_mark" format="boolean"/> <!--auto scroll to the nearest section_mark or not, default: false-->
-        <attr name="bsb_show_section_text" format="boolean"/> <!--show section-text or not, default: false-->
-        <attr name="bsb_section_text_size" format="dimension|reference"/> <!--text size of section-text, default: 14sp-->
-        <attr name="bsb_section_text_color" format="color|reference"/> <!--text color of section-text, default: same as right-track's color-->
+        <attr name="bsb_thumb_radius_on_dragging" format="dimension|reference" />
+        <attr name="bsb_track_color" format="color|reference" /> <!--color of right-track, default: R.color.colorPrimary-->
+        <attr name="bsb_second_track_color" format="color|reference" /> <!--color of left-track, default: R.color.colorAccent-->
+        <attr name="bsb_thumb_color" format="color|reference" /> <!--color of thumb, default: same as left-track's color-->
+        <attr name="bsb_section_count" format="integer|reference" /> <!--shares of whole progress(max - min), default: 10-->
+        <attr name="bsb_show_section_mark" format="boolean" /> <!--show demarcation points or not, default: false-->
+        <attr name="bsb_auto_adjust_section_mark" format="boolean" /> <!--auto scroll to the nearest section_mark or not, default: false-->
+        <attr name="bsb_show_section_text" format="boolean" /> <!--show section-text or not, default: false-->
+        <attr name="bsb_section_text_size" format="dimension|reference" /> <!--text size of section-text, default: 14sp-->
+        <attr name="bsb_section_text_color" format="color|reference" /> <!--text color of section-text, default: same as right-track's color-->
         <!--text position of section-text relative to track, sides, bottom_sides, below_section_mark, default: sides-->
         <attr name="bsb_section_text_position">
-            <enum name="sides" value="0"/>
-            <enum name="bottom_sides" value="1"/>
-            <enum name="below_section_mark" value="2"/>
+            <enum name="sides" value="0" />
+            <enum name="bottom_sides" value="1" />
+            <enum name="below_section_mark" value="2" />
         </attr>
-        <attr name="bsb_section_text_interval" format="integer"/> <!--the interval of two section-text, default: 1-->
-        <attr name="bsb_show_thumb_text" format="boolean"/> <!--show real time progress-text under thumb or not, default: false-->
-        <attr name="bsb_thumb_text_size" format="dimension|reference"/> <!--text size of progress-text, default: 14sp-->
-        <attr name="bsb_thumb_text_color" format="color|reference"/> <!--text color of progress-text, default: same as left-track's color-->
-        <attr name="bsb_show_progress_in_float" format="boolean"/> <!--show bubble-progress in float or not, default: false-->
-        <attr name="bsb_touch_to_seek" format="boolean"/> <!--touch anywhere on track to quickly seek, default: false-->
-        <attr name="bsb_seek_step_section" format="boolean"/> <!--seek one step by one section, the progress is discrete, default: false-->
-        <attr name="bsb_seek_by_section" format="boolean"/> <!--seek by section, the progress may not be linear, default: false-->
-        <attr name="bsb_bubble_color" format="color|reference"/> <!--color of bubble, default: same as left-track's color-->
-        <attr name="bsb_bubble_text_size" format="dimension|reference"/> <!--text size of bubble-progress, default: 14sp-->
-        <attr name="bsb_bubble_text_color" format="color|reference"/> <!--text color of bubble-progress, default: #ffffffff-->
-        <attr name="bsb_anim_duration" format="integer"/> <!--duration of animation, default: 200ms-->
-        <attr name="bsb_always_show_bubble" format="boolean"/> <!--bubble shows all time, default: false-->
-        <attr name="bsb_always_show_bubble_delay" format="integer"/> <!--the delay duration before bubble shows all the time, default: 200ms-->
-        <attr name="bsb_hide_bubble" format="boolean"/> <!--hide bubble, default: false-->
-        <attr name="bsb_rtl" format="boolean"/> <!--right to left, default: false-->
-        <attr name="android:enabled"/>
+        <attr name="bsb_section_text_interval" format="integer" /> <!--the interval of two section-text, default: 1-->
+        <attr name="bsb_show_thumb_text" format="boolean" /> <!--show real time progress-text under thumb or not, default: false-->
+        <attr name="bsb_thumb_text_size" format="dimension|reference" /> <!--text size of progress-text, default: 14sp-->
+        <attr name="bsb_thumb_text_color" format="color|reference" /> <!--text color of progress-text, default: same as left-track's color-->
+        <attr name="bsb_show_progress_in_float" format="boolean" /> <!--show bubble-progress in float or not, default: false-->
+        <attr name="bsb_touch_to_seek" format="boolean" /> <!--touch anywhere on track to quickly seek, default: false-->
+        <attr name="bsb_seek_step_section" format="boolean" /> <!--seek one step by one section, the progress is discrete, default: false-->
+        <attr name="bsb_seek_by_section" format="boolean" /> <!--seek by section, the progress may not be linear, default: false-->
+        <attr name="bsb_bubble_color" format="color|reference" /> <!--color of bubble, default: same as left-track's color-->
+        <attr name="bsb_bubble_text_size" format="dimension|reference" /> <!--text size of bubble-progress, default: 14sp-->
+        <attr name="bsb_bubble_text_color" format="color|reference" /> <!--text color of bubble-progress, default: #ffffffff-->
+        <attr name="bsb_anim_duration" format="integer" /> <!--duration of animation, default: 200ms-->
+        <attr name="bsb_always_show_bubble" format="boolean" /> <!--bubble shows all time, default: false-->
+        <attr name="bsb_always_show_bubble_delay" format="integer" /> <!--the delay duration before bubble shows all the time, default: 200ms-->
+        <attr name="bsb_hide_bubble" format="boolean" /> <!--hide bubble, default: false-->
+        <attr name="bsb_rtl" format="boolean" /> <!--right to left, default: false-->
+        <attr name="android:enabled" />
     </declare-styleable>
 
     <!-- 圆角矩形背景色 -->
-    <attr name="rv_backgroundColor" format="color"/>
+    <attr name="rv_backgroundColor" format="color" />
     <!-- 圆角矩形背景色press -->
-    <attr name="rv_backgroundPressColor" format="color"/>
+    <attr name="rv_backgroundPressColor" format="color" />
     <!-- 圆角弧度,单位dp-->
-    <attr name="rv_cornerRadius" format="dimension"/>
+    <attr name="rv_cornerRadius" format="dimension" />
     <!-- 圆角弧度,单位dp-->
-    <attr name="rv_strokeWidth" format="dimension"/>
+    <attr name="rv_strokeWidth" format="dimension" />
     <!-- 圆角边框颜色-->
-    <attr name="rv_strokeColor" format="color"/>
+    <attr name="rv_strokeColor" format="color" />
     <!-- 圆角边框颜色press -->
-    <attr name="rv_strokePressColor" format="color"/>
+    <attr name="rv_strokePressColor" format="color" />
     <!-- 文字颜色press-->
-    <attr name="rv_textPressColor" format="color"/>
+    <attr name="rv_textPressColor" format="color" />
     <!-- 圆角弧度是高度一半-->
-    <attr name="rv_isRadiusHalfHeight" format="boolean"/>
+    <attr name="rv_isRadiusHalfHeight" format="boolean" />
     <!-- 圆角矩形宽高相等,取较宽高中大值-->
-    <attr name="rv_isWidthHeightEqual" format="boolean"/>
+    <attr name="rv_isWidthHeightEqual" format="boolean" />
     <!-- 圆角弧度,单位dp,TopLeft-->
-    <attr name="rv_cornerRadius_TL" format="dimension"/>
+    <attr name="rv_cornerRadius_TL" format="dimension" />
     <!-- 圆角弧度,单位dp,TopRight-->
-    <attr name="rv_cornerRadius_TR" format="dimension"/>
+    <attr name="rv_cornerRadius_TR" format="dimension" />
     <!-- 圆角弧度,单位dp,BottomLeft-->
-    <attr name="rv_cornerRadius_BL" format="dimension"/>
+    <attr name="rv_cornerRadius_BL" format="dimension" />
     <!-- 圆角弧度,单位dp,BottomRight-->
-    <attr name="rv_cornerRadius_BR" format="dimension"/>
+    <attr name="rv_cornerRadius_BR" format="dimension" />
     <!-- 是否有Ripple效果,api21+有效-->
-    <attr name="rv_isRippleEnable" format="boolean"/>
+    <attr name="rv_isRippleEnable" format="boolean" />
 
     <declare-styleable name="RoundTextView">
-        <attr name="rv_backgroundColor"/>
-        <attr name="rv_backgroundPressColor"/>
-        <attr name="rv_cornerRadius"/>
-        <attr name="rv_strokeWidth"/>
-        <attr name="rv_strokeColor"/>
-        <attr name="rv_strokePressColor"/>
-        <attr name="rv_textPressColor"/>
-        <attr name="rv_isRadiusHalfHeight"/>
-        <attr name="rv_isWidthHeightEqual"/>
-        <attr name="rv_cornerRadius_TL"/>
-        <attr name="rv_cornerRadius_TR"/>
-        <attr name="rv_cornerRadius_BL"/>
-        <attr name="rv_cornerRadius_BR"/>
-        <attr name="rv_isRippleEnable"/>
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressColor" />
+        <attr name="rv_cornerRadius" />
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressColor" />
+        <attr name="rv_textPressColor" />
+        <attr name="rv_isRadiusHalfHeight" />
+        <attr name="rv_isWidthHeightEqual" />
+        <attr name="rv_cornerRadius_TL" />
+        <attr name="rv_cornerRadius_TR" />
+        <attr name="rv_cornerRadius_BL" />
+        <attr name="rv_cornerRadius_BR" />
+        <attr name="rv_isRippleEnable" />
     </declare-styleable>
 
     <declare-styleable name="RoundLinearLayout">
-        <attr name="rv_backgroundColor"/>
-        <attr name="rv_backgroundPressColor"/>
-        <attr name="rv_cornerRadius"/>
-        <attr name="rv_strokeWidth"/>
-        <attr name="rv_strokeColor"/>
-        <attr name="rv_strokePressColor"/>
-        <attr name="rv_isRadiusHalfHeight"/>
-        <attr name="rv_isWidthHeightEqual"/>
-        <attr name="rv_cornerRadius_TL"/>
-        <attr name="rv_cornerRadius_TR"/>
-        <attr name="rv_cornerRadius_BL"/>
-        <attr name="rv_cornerRadius_BR"/>
-        <attr name="rv_isRippleEnable"/>
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressColor" />
+        <attr name="rv_cornerRadius" />
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressColor" />
+        <attr name="rv_isRadiusHalfHeight" />
+        <attr name="rv_isWidthHeightEqual" />
+        <attr name="rv_cornerRadius_TL" />
+        <attr name="rv_cornerRadius_TR" />
+        <attr name="rv_cornerRadius_BL" />
+        <attr name="rv_cornerRadius_BR" />
+        <attr name="rv_isRippleEnable" />
     </declare-styleable>
 
     <declare-styleable name="RoundRelativeLayout">
-        <attr name="rv_backgroundColor"/>
-        <attr name="rv_backgroundPressColor"/>
-        <attr name="rv_cornerRadius"/>
-        <attr name="rv_strokeWidth"/>
-        <attr name="rv_strokeColor"/>
-        <attr name="rv_strokePressColor"/>
-        <attr name="rv_isRadiusHalfHeight"/>
-        <attr name="rv_isWidthHeightEqual"/>
-        <attr name="rv_cornerRadius_TL"/>
-        <attr name="rv_cornerRadius_TR"/>
-        <attr name="rv_cornerRadius_BL"/>
-        <attr name="rv_cornerRadius_BR"/>
-        <attr name="rv_isRippleEnable"/>
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressColor" />
+        <attr name="rv_cornerRadius" />
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressColor" />
+        <attr name="rv_isRadiusHalfHeight" />
+        <attr name="rv_isWidthHeightEqual" />
+        <attr name="rv_cornerRadius_TL" />
+        <attr name="rv_cornerRadius_TR" />
+        <attr name="rv_cornerRadius_BL" />
+        <attr name="rv_cornerRadius_BR" />
+        <attr name="rv_isRippleEnable" />
     </declare-styleable>
 
     <declare-styleable name="RoundFrameLayout">
-        <attr name="rv_backgroundColor"/>
-        <attr name="rv_backgroundPressColor"/>
-        <attr name="rv_cornerRadius"/>
-        <attr name="rv_strokeWidth"/>
-        <attr name="rv_strokeColor"/>
-        <attr name="rv_strokePressColor"/>
-        <attr name="rv_isRadiusHalfHeight"/>
-        <attr name="rv_isWidthHeightEqual"/>
-        <attr name="rv_cornerRadius_TL"/>
-        <attr name="rv_cornerRadius_TR"/>
-        <attr name="rv_cornerRadius_BL"/>
-        <attr name="rv_cornerRadius_BR"/>
-        <attr name="rv_isRippleEnable"/>
+        <attr name="rv_backgroundColor" />
+        <attr name="rv_backgroundPressColor" />
+        <attr name="rv_cornerRadius" />
+        <attr name="rv_strokeWidth" />
+        <attr name="rv_strokeColor" />
+        <attr name="rv_strokePressColor" />
+        <attr name="rv_isRadiusHalfHeight" />
+        <attr name="rv_isWidthHeightEqual" />
+        <attr name="rv_cornerRadius_TL" />
+        <attr name="rv_cornerRadius_TR" />
+        <attr name="rv_cornerRadius_BL" />
+        <attr name="rv_cornerRadius_BR" />
+        <attr name="rv_isRippleEnable" />
     </declare-styleable>
+
+    <!--=============================CheckBox========================================-->
 
     <declare-styleable name="SmoothCheckBox">
         <!-- 切换动画的持续时间，默认是300ms-->
-        <attr name="duration" format="integer"/>
+        <attr name="duration" format="integer" />
         <!-- 未选中时边框宽度，默认是宽度的10分之一-->
-        <attr name="stroke_width" format="dimension"/>
+        <attr name="stroke_width" format="dimension" />
         <!-- 始终显示边框-->
         <attr name="stroke_keep" format="boolean" />
         <!-- 对勾颜色，默认是Color.WHITE-->
-        <attr name="color_tick" format="color"/>
+        <attr name="color_tick" format="color" />
         <!-- 选中时的填充颜色，默认是#FB4846-->
-        <attr name="color_checked" format="color"/>
+        <attr name="color_checked" format="color" />
         <!-- 未选中时的填充颜色，默认是Color.WHITE-->
-        <attr name="color_unchecked" format="color"/>
+        <attr name="color_unchecked" format="color" />
         <!-- 未选中时边框颜色，默认是#DFDFDF-->
-        <attr name="color_unchecked_stroke" format="color"/>
+        <attr name="color_unchecked_stroke" format="color" />
         <!-- 选中时边框颜色，默认是#DFDFDF-->
-        <attr name="color_checked_stroke" format="color"/>
+        <attr name="color_checked_stroke" format="color" />
+    </declare-styleable>
+
+    <!--=============================Button========================================-->
+
+    <!-- 自定义按钮控件 ButtonView -->
+    <declare-styleable name="ButtonView">
+        <!-- 按钮的填充颜色，默认Color.TRANSPARENT -->
+        <attr name="textSolidColor" format="color" />
+        <!-- 按钮的选中颜色，默认Color.TRANSPARENT -->
+        <attr name="textSelectedSolidColor" format="color" />
+        <!-- 按钮的边框颜色，默认Color.TRANSPARENT -->
+        <attr name="textStrokeColor" format="color" />
+        <!-- 按钮的边框的宽度，默认0-->
+        <attr name="textStrokeWidth" format="dimension" />
+        <!-- 按钮的边角角度，默认0 -->
+        <attr name="textRadius" format="dimension" />
+        <attr name="textLeftTopRadius" format="dimension" />
+        <attr name="textLeftBottomRadius" format="dimension" />
+        <attr name="textRightTopRadius" format="dimension" />
+        <attr name="textRightBottomRadius" format="dimension" />
+        <!-- 按钮的图标 -->
+        <attr name="textDrawable" format="reference" />
+        <!-- 按钮的文字的颜色，默认Color.TRANSPARENT-->
+        <attr name="textNormalTextColor" format="color" />
+        <!-- 按钮的文字点击时的颜色，默认Color.TRANSPARENT-->
+        <attr name="textSelectedTextColor" format="color" />
     </declare-styleable>
 </resources>

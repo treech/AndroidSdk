@@ -1,9 +1,9 @@
-package io.github.treech.common.config
+package io.github.treech.util
 
 import android.app.Application
-import io.github.treech.common.ext.util.Preconditions
+import android.content.Context
 
-class CommonLibConfig private constructor() {
+class XConfig private constructor() {
 
     private lateinit var mApplication: Application
 
@@ -12,7 +12,13 @@ class CommonLibConfig private constructor() {
 
     val application: Application
         get() {
-            Preconditions.checkNotNull(mApplication, "Please call the CommonLibConfig#init() first")
+            Preconditions.checkNotNull(mApplication, "Please call the XConfig#init() first")
+            return mApplication
+        }
+
+    val context: Context
+        get() {
+            Preconditions.checkNotNull(mApplication, "Please call the XConfig#init() first")
             return mApplication
         }
 
@@ -28,15 +34,15 @@ class CommonLibConfig private constructor() {
     companion object {
 
         @Volatile
-        private var sInstance: CommonLibConfig? = null
+        private var sInstance: XConfig? = null
 
         @JvmStatic
-        val instance: CommonLibConfig?
+        val instance: XConfig?
             get() {
                 if (sInstance == null) {
-                    synchronized(CommonLibConfig::class.java) {
+                    synchronized(XConfig::class.java) {
                         if (sInstance == null) {
-                            sInstance = CommonLibConfig()
+                            sInstance = XConfig()
                         }
                     }
                 }

@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.github.treech.common">
-
-    <application>
-        <provider
-            android:name="io.github.treech.common.config.InitProvider"
-            android:authorities="${applicationId}.common-init-provider"
-            android:exported="false"
-            android:multiprocess="true" />
-    </application>
 </manifest>

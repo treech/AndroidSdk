@@ -156,7 +156,7 @@ public class RevealLayout extends FrameLayout
         return checkedView;
     }
 
-    protected int getCheckedLayoutId(){
+    protected int getCheckedLayoutId() {
         return mCheckedLayoutId;
     }
 

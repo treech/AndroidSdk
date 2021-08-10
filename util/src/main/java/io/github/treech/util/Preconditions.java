@@ -1,4 +1,4 @@
-package io.github.treech.common.ext.util;
+package io.github.treech.util;
 
 import android.os.Looper;
 

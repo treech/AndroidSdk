@@ -5,7 +5,7 @@ plugins {
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 2
+def versionPatch = 1
 
 android {
     compileSdkVersion 30
@@ -45,21 +45,15 @@ android {
             }
         }
     }
-
-    buildFeatures {
-        dataBinding = true
-    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(':util')
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.ext.dependencies.coreKtx"
-    //material
-    implementation "com.google.android.material:material:$rootProject.ext.dependencies.material"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.dependencies.appcompat"
 
     testImplementation "junit:junit:$rootProject.ext.dependencies.junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.dependencies.testJunit"
@@ -68,7 +62,7 @@ dependencies {
 
 ext {
     groupId = 'io.github.treech'
-    description = 'android views for android'
+    description = 'android utils for android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'
     license = 'MIT'

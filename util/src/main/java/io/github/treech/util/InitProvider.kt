@@ -1,19 +1,18 @@
-package io.github.treech.common.config
+package io.github.treech.util
 
 import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
-import io.github.treech.common.config.CommonLibConfig.Companion.instance
-import io.github.treech.common.ext.util.getApplicationByReflect
+import io.github.treech.util.XConfig.Companion.instance
 
 class InitProvider : ContentProvider() {
 
     override fun onCreate(): Boolean {
         var application = context?.applicationContext
         if (application == null) {
-            application = getApplicationByReflect()
+            application = Utils.getApplicationByReflect()
         }
         instance!!.init(application as Application)
         return true

@@ -8,7 +8,7 @@ public class CompatUtils {
         return (int) (dipValue * scale + 0.5f);
     }
 
-    public static int sp2px(Context context,float sp) {
+    public static int sp2px(Context context, float sp) {
         final float scale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (sp * scale + 0.5f);
     }
