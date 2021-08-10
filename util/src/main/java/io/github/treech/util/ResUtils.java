@@ -24,7 +24,6 @@ import androidx.core.content.ContextCompat;
 
 /**
  * 获取res中的资源
- *
  */
 public final class ResUtils {
 

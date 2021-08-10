@@ -37,7 +37,6 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * 工具类（不建议外部调用)
- *
  */
 public final class Utils {
 

@@ -61,7 +61,6 @@ import java.lang.ref.WeakReference;
 
 /**
  * SpannableString相关工具类
- *
  */
 public final class SpanUtils {
 
