@@ -17,8 +17,8 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Checkable;
 
-import io.github.treech.ui.CompatUtils;
 import io.github.treech.ui.R;
+import io.github.treech.util.DensityUtils;
 
 /**
  * Description : A custom CheckBox with animation for Android
@@ -79,7 +79,7 @@ public class SmoothCheckBox extends View implements Checkable {
         mFloorCheckedColor = ta.getColor(R.styleable.SmoothCheckBox_color_checked_stroke, COLOR_FLOOR_CHECKED);
         mCheckedColor = ta.getColor(R.styleable.SmoothCheckBox_color_checked, COLOR_CHECKED);
         mUnCheckedColor = ta.getColor(R.styleable.SmoothCheckBox_color_unchecked, COLOR_UNCHECKED);
-        mStrokeWidth = ta.getDimensionPixelSize(R.styleable.SmoothCheckBox_stroke_width, CompatUtils.dp2px(getContext(), 0));
+        mStrokeWidth = ta.getDimensionPixelSize(R.styleable.SmoothCheckBox_stroke_width, DensityUtils.dp2px(getContext(), 0));
         mStrokeKeep = ta.getBoolean(R.styleable.SmoothCheckBox_stroke_keep, false);
         ta.recycle();
 
@@ -193,7 +193,7 @@ public class SmoothCheckBox extends View implements Checkable {
     }
 
     private int measureSize(int measureSpec) {
-        int defSize = CompatUtils.dp2px(getContext(), DEF_DRAW_SIZE);
+        int defSize = DensityUtils.dp2px(getContext(), DEF_DRAW_SIZE);
         int specSize = MeasureSpec.getSize(measureSpec);
         int specMode = MeasureSpec.getMode(measureSpec);
 
