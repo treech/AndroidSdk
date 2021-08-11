@@ -248,7 +248,7 @@ public class SmoothCheckBox extends View implements Checkable {
 
     private void drawCenter(Canvas canvas) {
         mPaint.setColor(isChecked() ? mCheckedColor : mUnCheckedColor);
-        float radius = (mCenterPoint.x - mStrokeWidth) * (mStrokeKeep ? 1 : mScaleVal);
+        float radius = (mCenterPoint.x - mStrokeWidth) * (mStrokeKeep ? 1.0f : mScaleVal);
         canvas.drawCircle(mCenterPoint.x, mCenterPoint.y, radius, mPaint);
     }
 
