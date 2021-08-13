@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
+        tools:ignore="contentDescription"
+        android:adjustViewBounds="true" />
+
+    <io.github.treech.ui.widget.imageview.crop.CropOverlayView
+        android:id="@+id/crop_overlay_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</merge>

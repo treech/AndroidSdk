@@ -1,0 +1,16 @@
+<io.github.treech.ui.widget.dialog.materialdialog.internal.MDRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/md_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include layout="@layout/xmd_layout_stub_title_frame" />
+
+    <FrameLayout
+        android:id="@+id/md_customViewFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <include layout="@layout/xmd_layout_stub_action_buttons" />
+
+</io.github.treech.ui.widget.dialog.materialdialog.internal.MDRootLayout>

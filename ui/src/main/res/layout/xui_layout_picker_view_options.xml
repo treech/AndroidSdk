@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/xui_include_picker_view_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/picker_view_topbar_height" />
+
+    <LinearLayout
+        android:id="@+id/options_picker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/xui_config_color_white"
+        android:orientation="horizontal">
+
+        <io.github.treech.ui.widget.picker.wheelview.WheelView
+            android:id="@+id/options1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <io.github.treech.ui.widget.picker.wheelview.WheelView
+            android:id="@+id/options2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <io.github.treech.ui.widget.picker.wheelview.WheelView
+            android:id="@+id/options3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+</LinearLayout>

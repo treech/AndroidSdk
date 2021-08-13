@@ -1,4 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest package="io.github.treech.ui">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.treech.ui">
+
+    <application>
+        <provider
+            android:name="io.github.treech.ui.XUIInitProvider"
+            android:authorities="${applicationId}.xui-init-provider"
+            android:exported="false"
+            android:multiprocess="true" />
+
+        <activity
+            android:name=".widget.imageview.preview.ui.PreviewActivity"
+            android:theme="@style/XUITheme.Translucent" />
+        <activity
+            android:name=".widget.imageview.preview.ui.VideoPlayerActivity"
+            android:theme="@style/XUITheme.Translucent" />
+    </application>
 
 </manifest>

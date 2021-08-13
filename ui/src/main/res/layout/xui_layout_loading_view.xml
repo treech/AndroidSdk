@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <io.github.treech.ui.widget.progress.loading.ARCLoadingView
+        android:id="@+id/arc_loading_view"
+        android:layout_width="?attr/xui_loading_view_size"
+        android:layout_height="?attr/xui_loading_view_size"
+        app:lv_auto="false"
+        app:lv_width="?attr/xui_loading_view_width" />
+
+    <TextView
+        android:id="@+id/tv_tip_message"
+        style="@style/TextStyle.Explain"
+        android:layout_marginTop="?attr/xui_loading_margin_size"
+        android:textSize="?attr/xui_loading_text_size"
+        android:text="@string/xui_tip_loading_message" />
+</merge>

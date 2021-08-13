@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.treech.sdk"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -48,11 +48,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':common')
-    implementation project(':loadX')
-    implementation project(':net')
+//    implementation project(':common')
+//    implementation project(':loadX')
+//    implementation project(':net')
     implementation project(':ui')
-    implementation project(':imgEdit')
+//    implementation project(':imgEdit')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$rootProject.ext.dependencies.coreKtx"

@@ -1,0 +1,33 @@
+<io.github.treech.ui.widget.dialog.materialdialog.internal.MDRootLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:md_reduce_padding_no_title_no_buttons="false">
+
+    <include layout="@layout/xmd_layout_stub_title_frame" />
+
+    <ScrollView
+        android:id="@+id/md_contentScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingTop="@dimen/md_content_padding_top"
+        android:paddingBottom="@dimen/md_content_padding_bottom">
+
+        <TextView
+            android:id="@+id/md_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="?attr/md_dialog_frame_margin"
+            android:paddingEnd="?attr/md_dialog_frame_margin"
+            android:textSize="?attr/md_content_textsize"
+            tools:text="Content" />
+
+    </ScrollView>
+
+    <include layout="@layout/xmd_layout_stub_action_buttons" />
+
+</io.github.treech.ui.widget.dialog.materialdialog.internal.MDRootLayout>

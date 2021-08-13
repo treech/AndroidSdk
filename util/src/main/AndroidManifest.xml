@@ -3,10 +3,6 @@
     package="io.github.treech.util">
 
     <application>
-        <provider
-            android:name=".InitProvider"
-            android:authorities="${applicationId}.common-init-provider"
-            android:exported="false"
-            android:multiprocess="true" />
+
     </application>
 </manifest>
