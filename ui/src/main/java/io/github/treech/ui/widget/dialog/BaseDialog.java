@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialog;
 
 import io.github.treech.ui.R;
-
 import io.github.treech.ui.utils.KeyboardUtils;
 import io.github.treech.ui.utils.ResUtils;
 
@@ -75,6 +74,24 @@ public class BaseDialog extends AppCompatDialog {
         }
         return this;
     }
+
+    /**
+     * 设置弹框的宽(高度是wrap_content)
+     *
+     * @param width
+     * @return
+     */
+    public BaseDialog setDialogWidth(int width) {
+        // 获取对话框当前的参数值
+        Window window = getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams p = window.getAttributes();
+            p.width = width;
+            window.setAttributes(p);
+        }
+        return this;
+    }
+
 
     @Override
     public <T extends View> T findViewById(int resId) {
