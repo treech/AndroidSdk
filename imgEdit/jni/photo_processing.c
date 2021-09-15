@@ -211,12 +211,13 @@ Java_io_github_treech_PhotoProcess_handleSmoothAndWhiteSkin(JNIEnv *env, jobject
         return;
     }
 
-    LOGI("Bitmap smooth and whiteskin handle");
+    LOGI("Bitmap smooth and whiteSkin handle,smoothValue = %f and whiteSkinValue = %f", smoothValue,whiteValue);
     initBeautyMatrix((uint32_t *) pixels, info.width, info.height);
 
-    LOGI("Bitmap smooth = %f and whiteSkin = %f", smoothValue,whiteValue);
-
     setSmooth((uint32_t *) pixels, smoothValue, info.width, info.height);
+
+    initBeautyMatrix((uint32_t *) pixels, info.width, info.height);
+
     setWhiteSkin((uint32_t *) pixels, whiteValue, info.width, info.height);
 
     AndroidBitmap_unlockPixels(env, bitmap);
@@ -357,6 +358,7 @@ void setWhiteSkin(uint32_t *pix, float whiteVal, int width, int height) {
                     RGB.red = 255 * (log(div255(RGB.red) * (whiteVal - 1) + 1) / a);
                     RGB.green = 255 * (log(div255(RGB.green) * (whiteVal - 1) + 1) / a);
                     RGB.blue = 255 * (log(div255(RGB.blue) * (whiteVal - 1) + 1) / a);
+                    if (RGB.alpha != 255) RGB.alpha = 255 * (log(div255(RGB.alpha) * (whiteVal - 1) + 1) / a);
                 }
                 pix[offset] = convertArgbToInt(RGB);
             }
