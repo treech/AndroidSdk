@@ -1,25 +1,22 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 3
+def versionPatch = 1
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 30
 
-        externalNativeBuild {
-            cmake {
-                cFlags "-DANDROID_NDK -DDISABLE_IMPORTGL"
-            }
-        }
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles 'consumer-rules.pro'
+        vectorDrawables.useSupportLibrary = true
     }
 
     compileOptions {
@@ -48,23 +45,19 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path file('jni/CMakeLists.txt')
-            version '3.10.2'
-        }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
     }
 }
 
 dependencies {
-    testImplementation "junit:junit:$rootProject.ext.dependencies.junit"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.dependencies.testJunit"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.dependencies.testEspressoCore"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.dependencies.appcompat"
 }
 
 ext {
     groupId = 'io.github.treech'
-    description = 'photo edit for android'
+    description = 'An expandable layout container for Android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'
     license = 'MIT'
