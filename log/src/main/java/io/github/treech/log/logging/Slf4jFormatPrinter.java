@@ -1,7 +1,9 @@
-package io.github.treech.log.core.logging;
+package io.github.treech.log.logging;
 
 import android.text.TextUtils;
-import android.util.Log;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -9,20 +11,11 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 
 
-/**
- * ================================================
- * 对 OkHttp 的请求和响应信息进行更规范和清晰的打印, 此类为框架默认实现, 以默认格式打印信息, 若觉得默认打印格式
- * 并不能满足自己的需求, 可自行扩展自己理想的打印格式
- * ================================================
- */
-
-public class DefaultFormatPrinter implements FormatPrinter {
+@SuppressWarnings("ConstantConditions")
+public class Slf4jFormatPrinter implements FormatPrinter {
     private static final String TAG = "HttpLog";
+    private static final Logger LOGGER = LoggerFactory.getLogger(TAG);
     private static final String LINE_SEPARATOR = System.getProperty("line.separator");
-    private static final String DOUBLE_SEPARATOR = LINE_SEPARATOR + LINE_SEPARATOR;
-
-    private static final String[] OMITTED_RESPONSE = {LINE_SEPARATOR, "Omitted response body"};
-    private static final String[] OMITTED_REQUEST = {LINE_SEPARATOR, "Omitted request body"};
 
     private static final String N = "\n";
     private static final String T = "\t";
@@ -40,7 +33,7 @@ public class DefaultFormatPrinter implements FormatPrinter {
     private static final String CENTER_LINE = "├ ";
     private static final String DEFAULT_LINE = "│ ";
     private static final String[] ARMS = new String[]{"-A-", "-R-", "-M-", "-S-"};
-    private static final ThreadLocal<Integer> last = new ThreadLocal<Integer>() {
+    private static ThreadLocal<Integer> last = new ThreadLocal<Integer>() {
         @Override
         protected Integer initialValue() {
             return 0;
@@ -49,26 +42,6 @@ public class DefaultFormatPrinter implements FormatPrinter {
 
     private static boolean isEmpty(String line) {
         return TextUtils.isEmpty(line) || N.equals(line) || T.equals(line) || TextUtils.isEmpty(line.trim());
-    }
-
-    /**
-     * 对 {@code lines} 中的信息进行逐行打印
-     *
-     * @param tag
-     * @param lines
-     * @param withLineSize 为 {@code true} 时, 每行的信息长度不会超过110, 超过则自动换行
-     */
-    private static void logLines(String tag, String[] lines, boolean withLineSize) {
-        for (String line : lines) {
-            int lineLength = line.length();
-            int MAX_LONG_SIZE = withLineSize ? 110 : lineLength;
-            for (int i = 0; i <= lineLength / MAX_LONG_SIZE; i++) {
-                int start = i * MAX_LONG_SIZE;
-                int end = (i + 1) * MAX_LONG_SIZE;
-                end = end > line.length() ? line.length() : end;
-                Log.i(TAG, line.substring(start, end));
-            }
-        }
     }
 
     private static String computeKey() {
@@ -96,23 +69,23 @@ public class DefaultFormatPrinter implements FormatPrinter {
         return computeKey() + tag;
     }
 
-    private static String[] getRequest(Request request) {
+    private static String getRequest(Request request) {
         String log;
         String header = request.headers().toString();
-        log = METHOD_TAG + request.method() + DOUBLE_SEPARATOR +
+        log = METHOD_TAG + request.method() + LINE_SEPARATOR +
                 (isEmpty(header) ? "" : HEADERS_TAG + LINE_SEPARATOR + dotHeaders(header));
-        return log.split(LINE_SEPARATOR);
+        return log;
     }
 
-    private static String[] getResponse(String header, long tookMs, int code, boolean isSuccessful,
-                                        List<String> segments, String message) {
+    private static String getResponse(String header, long tookMs, int code, boolean isSuccessful,
+                                      List<String> segments, String message) {
         String log;
         String segmentString = slashSegments(segments);
         log = ((!TextUtils.isEmpty(segmentString) ? segmentString + " - " : "") + "is success : "
-                + isSuccessful + " - " + RECEIVED_TAG + tookMs + "ms" + DOUBLE_SEPARATOR + STATUS_CODE_TAG +
-                code + " / " + message + DOUBLE_SEPARATOR + (isEmpty(header) ? "" : HEADERS_TAG + LINE_SEPARATOR +
+                + isSuccessful + " - " + RECEIVED_TAG + tookMs + "ms" + LINE_SEPARATOR + STATUS_CODE_TAG +
+                code + " / " + message + LINE_SEPARATOR + (isEmpty(header) ? "" : HEADERS_TAG + LINE_SEPARATOR +
                 dotHeaders(header)));
-        return log.split(LINE_SEPARATOR);
+        return log;
     }
 
     private static String slashSegments(List<String> segments) {
@@ -152,14 +125,6 @@ public class DefaultFormatPrinter implements FormatPrinter {
         return builder.toString();
     }
 
-    private static String getTag(boolean isRequest) {
-        if (isRequest) {
-            return TAG + "-Request";
-        } else {
-            return TAG + "-Response";
-        }
-    }
-
     /**
      * 打印网络请求信息, 当网络请求时 {{@link okhttp3.RequestBody}} 可以解析的情况
      *
@@ -169,13 +134,12 @@ public class DefaultFormatPrinter implements FormatPrinter {
     @Override
     public void printJsonRequest(Request request, String bodyString) {
         final String requestBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
-        final String tag = getTag(true);
 
-        Log.i(TAG, REQUEST_UP_LINE);
-        logLines(tag, new String[]{URL_TAG + request.url()}, false);
-        logLines(tag, getRequest(request), true);
-        logLines(tag, requestBody.split(LINE_SEPARATOR), true);
-        Log.i(TAG, END_LINE);
+        LOGGER.info(REQUEST_UP_LINE);
+        LOGGER.info(URL_TAG + request.url());
+        LOGGER.info(getRequest(request));
+        LOGGER.info(requestBody);
+        LOGGER.info(END_LINE);
     }
 
     /**
@@ -185,13 +149,12 @@ public class DefaultFormatPrinter implements FormatPrinter {
      */
     @Override
     public void printFileRequest(Request request) {
-        final String tag = getTag(true);
 
-        Log.i(TAG, REQUEST_UP_LINE);
-        logLines(tag, new String[]{URL_TAG + request.url()}, false);
-        logLines(tag, getRequest(request), true);
-        logLines(tag, OMITTED_REQUEST, true);
-        Log.i(TAG, END_LINE);
+        LOGGER.info(REQUEST_UP_LINE);
+        LOGGER.info(URL_TAG + request.url());
+        LOGGER.info(getRequest(request));
+        LOGGER.info("Omitted request body");
+        LOGGER.info(END_LINE);
     }
 
     /**
@@ -214,14 +177,12 @@ public class DefaultFormatPrinter implements FormatPrinter {
                 : RequestInterceptor.isXml(contentType) ? CharacterHandler.xmlFormat(bodyString) : bodyString;
 
         final String responseBody = LINE_SEPARATOR + BODY_TAG + LINE_SEPARATOR + bodyString;
-        final String tag = getTag(false);
-        final String[] urlLine = {URL_TAG + responseUrl, N};
 
-        Log.i(TAG, RESPONSE_UP_LINE);
-        logLines(tag, urlLine, true);
-        logLines(tag, getResponse(headers, chainMs, code, isSuccessful, segments, message), true);
-        logLines(tag, responseBody.split(LINE_SEPARATOR), true);
-        Log.i(TAG, END_LINE);
+        LOGGER.info(RESPONSE_UP_LINE);
+        LOGGER.info(URL_TAG + responseUrl);
+        LOGGER.info(getResponse(headers, chainMs, code, isSuccessful, segments, message));
+        LOGGER.info(responseBody);
+        LOGGER.info(END_LINE);
     }
 
     /**
@@ -238,14 +199,12 @@ public class DefaultFormatPrinter implements FormatPrinter {
     @Override
     public void printFileResponse(long chainMs, boolean isSuccessful, int code, String headers,
                                   List<String> segments, String message, final String responseUrl) {
-        final String tag = getTag(false);
-        final String[] urlLine = {URL_TAG + responseUrl, N};
 
-        Log.i(TAG, RESPONSE_UP_LINE);
-        logLines(tag, urlLine, true);
-        logLines(tag, getResponse(headers, chainMs, code, isSuccessful, segments, message), true);
-        logLines(tag, OMITTED_RESPONSE, true);
-        Log.i(TAG, END_LINE);
+        LOGGER.info(RESPONSE_UP_LINE);
+        LOGGER.info(URL_TAG + responseUrl);
+        LOGGER.info(getResponse(headers, chainMs, code, isSuccessful, segments, message));
+        LOGGER.info("Omitted response body");
+        LOGGER.info(END_LINE);
     }
 
 }

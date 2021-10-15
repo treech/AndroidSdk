@@ -1,4 +1,4 @@
-package io.github.treech.log;
+package io.github.treech.log.parse;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

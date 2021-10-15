@@ -1,6 +1,6 @@
 package io.github.treech.log;
 
-import static io.github.treech.log.ObjectUtil.objectToString;
+import static io.github.treech.log.parse.ObjectUtil.objectToString;
 
 import android.text.TextUtils;
 

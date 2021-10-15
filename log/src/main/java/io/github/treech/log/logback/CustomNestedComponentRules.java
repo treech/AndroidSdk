@@ -1,4 +1,4 @@
-package io.github.treech.log.core.logback;
+package io.github.treech.log.logback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class CustomNestedComponentRules {
         NESTED_COMPONENTS = new ArrayList<>();
     }
 
-    static void addCustomNestedComponentRegistryRules(DefaultNestedComponentRegistry registry) {
+    public static void addCustomNestedComponentRegistryRules(DefaultNestedComponentRegistry registry) {
 
         if (!NESTED_COMPONENTS.isEmpty()) {
             for (NestedComponent component : NESTED_COMPONENTS) {

@@ -1,4 +1,4 @@
-package io.github.treech.log.core.logging;
+package io.github.treech.log.logging;
 
 import okhttp3.internal.platform.Platform;
 

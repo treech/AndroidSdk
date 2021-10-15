@@ -6,7 +6,7 @@
     <!--<property name="LOG_DIR" value="${EXT_DIR}/Netposa/log"/>
     <property name="LOG_FILE_NAME" value="netposa_vid"/>-->
 
-    <appender name="logcat" class="io.github.treech.log.core.logback.LogcatAppender">
+    <appender name="logcat" class="io.github.treech.log.logback.LogcatAppender">
         <encoder>
             <pattern>%msg</pattern>
         </encoder>

@@ -1,4 +1,4 @@
-package io.github.treech.log;
+package io.github.treech.log.parse;
 
 import android.content.Intent;
 import android.text.TextUtils;

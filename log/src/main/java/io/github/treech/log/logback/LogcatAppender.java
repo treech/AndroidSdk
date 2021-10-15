@@ -1,4 +1,4 @@
-package io.github.treech.log.core.logback;
+package io.github.treech.log.logback;
 
 import android.util.Log;
 

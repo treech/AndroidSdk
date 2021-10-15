@@ -1,4 +1,4 @@
-package io.github.treech.log.core.logback;
+package io.github.treech.log;
 
 import android.Manifest;
 import android.content.Context;
@@ -29,6 +29,8 @@ import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.FileAppender;
 import ch.qos.logback.core.joran.spi.DefaultNestedComponentRegistry;
 import ch.qos.logback.core.joran.spi.JoranException;
+import io.github.treech.log.logback.CustomNestedComponentRules;
+import io.github.treech.log.logback.LogcatAppender;
 
 public class LogSdk implements Thread.UncaughtExceptionHandler {
 

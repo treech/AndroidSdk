@@ -1,4 +1,4 @@
-package io.github.treech.log;
+package io.github.treech.log.parse;
 
 public interface Parser<T> {
 
