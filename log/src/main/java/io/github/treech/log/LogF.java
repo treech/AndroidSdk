@@ -173,11 +173,11 @@ public class LogF {
                 msg = getMessage(obj);
             }
         }
-        msg = appendLogLoaction(msg);
+        msg = appendLogLocation(msg);
         return msg;
     }
 
-    private static String appendLogLoaction(String msg) {
+    private static String appendLogLocation(String msg) {
         StackTraceElement[] sElements = Thread.currentThread().getStackTrace();
         if (sElements.length >= 6) {
             int index = 5;
