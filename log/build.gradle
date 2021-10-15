@@ -1,0 +1,75 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 1
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 30
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFileName != null && output.outputFileName.endsWith('.aar')) {
+                if (variant.buildType.name == 'release') {
+                    output.outputFileName = "${project.name}-${project.ext.getProperty('version')}.aar"
+                }
+            }
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    api "com.squareup.okhttp3:okhttp:$rootProject.ext.dependencies.okhttp"
+    implementation 'androidx.annotation:annotation:1.2.0'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    compileOnly 'log4j:log4j:1.2.17'
+    compileOnly 'org.slf4j:slf4j-log4j12:1.7.30'
+    compileOnly 'simple.android.log4j:log4j-android:1.0.1'
+    implementation 'com.github.tony19:logback-android:2.0.0'
+}
+
+ext {
+    groupId = 'io.github.treech'
+    description = 'file log bridging with Android Log'
+    gitUrl = 'https://github.com/treech/AndroidSdk'
+    authorEmail = 'yeguoqiang6@outlook.com'
+    license = 'MIT'
+    version = "${versionMajor}.${versionMinor}.${versionPatch}"
+}
+
+//apply from: '../publish.gradle'
+apply from: '../publishLocal.gradle'

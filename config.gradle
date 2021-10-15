@@ -21,7 +21,7 @@ ext {
             glide                                         : "4.12.0",
 
             //network
-            okhttp                                        : "4.9.1",
+            okhttp                                        : "5.0.0-alpha.2",
             retrofit                                      : "2.9.0",
             converterGson                                 : "2.9.0",
             adapterRxjava2                                : "2.8.1",

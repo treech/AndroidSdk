@@ -1,0 +1,52 @@
+<configuration debug="true">
+
+    <!--子节点<property> ：用来定义变量值，它有两个属性name和value，
+    通过<property>定义的值会被插入到logger上下文中，可以使“${}”来使用变量-->
+
+    <!--<property name="LOG_DIR" value="${EXT_DIR}/Netposa/log"/>
+    <property name="LOG_FILE_NAME" value="netposa_vid"/>-->
+
+    <appender name="logcat" class="io.github.treech.log.core.logback.LogcatAppender">
+        <encoder>
+            <pattern>%msg</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_FILE_NAME}.log</file>
+        <!-- Compression is not supported in prudent mode -->
+        <!-- Support multiple-JVM writing to the same log file -->
+        <prudent>false</prudent>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/${LOG_FILE_NAME}-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+
+            <!-- each file should be at most 10MB, keep 10 days worth of history, but at most 1GB -->
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+
+        <!--custom encoder and layout-->
+        <!--<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5p %logger{36} - %msg%n</pattern>
+            </layout>
+        </encoder>-->
+    </appender>
+
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>256</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="rolling" />
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="logcat" />　　　　　　　　　　
+        <appender-ref ref="async" />　　　　　　
+    </root>
+</configuration>
