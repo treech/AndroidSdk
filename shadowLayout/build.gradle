@@ -5,7 +5,7 @@ plugins {
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 2
+def versionPatch = 1
 
 android {
     compileSdkVersion 30
@@ -53,18 +53,13 @@ android {
 }
 
 dependencies {
-    api "com.squareup.okhttp3:okhttp:$rootProject.ext.dependencies.okhttp"
     implementation "androidx.annotation:annotation:$rootProject.ext.dependencies.annotation"
-    implementation 'org.slf4j:slf4j-api:1.7.32'
-    compileOnly 'log4j:log4j:1.2.17'
-    compileOnly 'org.slf4j:slf4j-log4j12:1.7.30'
-    compileOnly 'simple.android.log4j:log4j-android:1.0.1'
-    implementation 'com.github.tony19:logback-android:2.0.0'
+    compileOnly "com.github.bumptech.glide:glide:$rootProject.ext.dependencies.glide"
 }
 
 ext {
     groupId = 'io.github.treech'
-    description = 'file log bridging with Android Log'
+    description = 'showdowLayout for android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'
     license = 'MIT'
