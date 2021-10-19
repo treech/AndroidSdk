@@ -1,4 +1,42 @@
-# View
+[TOC]
+
+# dialog
+
+参考：主要来源于XUI dialog组件
+
+# ExpandableLayout
+
+参考：https://github.com/cachapa/ExpandableLayout
+
+注：XUI里面也有
+
+# imgEdit
+
+参考:https://github.com/siwangqishiq/ImageEditor-Android
+
+# loadX
+
+参考：https://github.com/KingJA/LoadSir
+
+# log
+
+**纯手写**
+
+# net
+
+**纯手写**
+
+# popwindow
+
+参考：主要来源于XUI popwindow组件
+
+# shadowLayout
+
+参考:https://github.com/lihangleo2/ShadowLayout/
+
+更新时间:20211018
+
+# ui
 
 ## 揭示效果布局(常用语收藏、关注等按钮特效)
 
@@ -40,3 +78,6 @@
 1. SmoothCheckBox[20210810]
    带动画的对勾checkbox
    https://github.com/andyxialm/SmoothCheckBox
+
+# util
+
