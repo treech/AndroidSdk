@@ -19,6 +19,7 @@ ext {
             constraintlayout                              : "2.1.1",
             recyclerview                                  : "1.2.1",
             glide                                         : "4.12.0",
+            viewpager2                                    : "1.0.0",
 
             //network
             okhttp                                        : "5.0.0-alpha.2",

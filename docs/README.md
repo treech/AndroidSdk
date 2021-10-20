@@ -1,5 +1,9 @@
 [TOC]
 
+# banner
+
+参考：https://github.com/zguop/banner
+
 # dialog
 
 参考：主要来源于XUI dialog组件
