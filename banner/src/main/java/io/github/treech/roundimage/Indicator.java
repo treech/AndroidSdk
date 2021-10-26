@@ -1,4 +1,4 @@
-package io.github.treech.banner;
+package io.github.treech.roundimage;
 
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -6,7 +6,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Px;
 
 /**
- * 可以实现该接口，自定义Indicator 可参考内置的{@link io.github.treech.banner.IndicatorView}
+ * 可以实现该接口，自定义Indicator 可参考内置的{@link io.github.treech.roundimage.IndicatorView}
  */
 public interface Indicator {
 

@@ -7,29 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#009456"
         android:orientation="vertical"
         android:showDividers="middle">
-
-        <io.github.treech.shadowLayout.ShadowLayout
-            android:id="@+id/shadowLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            app:hl_cornerRadius="10dp"
-            app:hl_shadowColor="#2a000000"
-            app:hl_shadowLimit="5dp">
-
-            <TextView
-                android:id="@+id/txt_test"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="圆角"
-                android:textColor="#000" />
-        </io.github.treech.shadowLayout.ShadowLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -44,5 +24,13 @@
             style="@style/Widget.AppCompat.CompoundButton.RadioButton"
             android:layout_width="40dp"
             android:layout_height="40dp" />
+
+        <io.github.treech.roundImage.CircleImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/home_group_photo_restoration"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp" />
     </LinearLayout>
 </ScrollView>

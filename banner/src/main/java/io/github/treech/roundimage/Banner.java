@@ -1,4 +1,4 @@
-package io.github.treech.banner;
+package io.github.treech.roundimage;
 
 import android.content.Context;
 import android.graphics.Outline;

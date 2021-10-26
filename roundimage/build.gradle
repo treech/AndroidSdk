@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 1
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 30
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            if (output.outputFileName != null && output.outputFileName.endsWith('.aar')) {
+                if (variant.buildType.name == 'release') {
+                    output.outputFileName = "${project.name}-${project.ext.getProperty('version')}.aar"
+                }
+            }
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation "androidx.annotation:annotation:$rootProject.ext.dependencies.annotation"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.dependencies.appcompat"
+    compileOnly "com.github.bumptech.glide:glide:$rootProject.ext.dependencies.glide"
+}
+
+ext {
+    groupId = 'io.github.treech'
+    description = 'roundimage for android'
+    gitUrl = 'https://github.com/treech/AndroidSdk'
+    authorEmail = 'yeguoqiang6@outlook.com'
+    license = 'MIT'
+    version = "${versionMajor}.${versionMinor}.${versionPatch}"
+}
+
+//apply from: '../publish.gradle'
+apply from: '../publishLocal.gradle'
