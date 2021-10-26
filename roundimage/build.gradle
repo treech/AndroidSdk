@@ -55,7 +55,6 @@ android {
 dependencies {
     implementation "androidx.annotation:annotation:$rootProject.ext.dependencies.annotation"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.dependencies.appcompat"
-    compileOnly "com.github.bumptech.glide:glide:$rootProject.ext.dependencies.glide"
 }
 
 ext {
@@ -67,5 +66,5 @@ ext {
     version = "${versionMajor}.${versionMinor}.${versionPatch}"
 }
 
-//apply from: '../publish.gradle'
-apply from: '../publishLocal.gradle'
+apply from: '../publish.gradle'
+//apply from: '../publishLocal.gradle'
