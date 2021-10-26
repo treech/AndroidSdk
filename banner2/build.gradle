@@ -1,11 +1,10 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
 }
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 3
+def versionPatch = 1
 
 android {
     compileSdkVersion 30
@@ -53,17 +52,18 @@ android {
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.dependencies.appcompat"
+    implementation "androidx.annotation:annotation:$rootProject.ext.dependencies.annotation"
+    compileOnly "androidx.viewpager2:viewpager2:$rootProject.ext.dependencies.viewpager2"
 }
 
 ext {
     groupId = 'io.github.treech'
-    description = 'android utils for android'
+    description = 'banner2 for android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'
     license = 'MIT'
     version = "${versionMajor}.${versionMinor}.${versionPatch}"
 }
 
-//apply from: '../publish.gradle'
-apply from: '../publishLocal.gradle'
+apply from: '../publish.gradle'
+//apply from: '../publishLocal.gradle'
