@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="switch_alpha_pressed" format="boolean" />
+    <attr name="switch_alpha_disabled" format="boolean" />
+    <attr name="alpha_pressed" format="float" />
+    <attr name="alpha_disabled" format="float" />
+</resources>

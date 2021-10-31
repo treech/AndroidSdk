@@ -335,7 +335,7 @@ public class ToastUtils {
                 mWM = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
                 mParams.type = WindowManager.LayoutParams.TYPE_TOAST;
             } else {
-                Context topActivityOrApp = Utils.getTopActivityOrApp();
+                Context topActivityOrApp = ActivityUtils.getTopActivityOrApp();
                 if (!(topActivityOrApp instanceof Activity)) {
                     Log.e("ToastUtils", "Couldn't get top Activity.");
                     return;

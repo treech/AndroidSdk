@@ -56,7 +56,7 @@ public final class FileUtils {
      * @return the file
      */
     public static File getFileByPath(final String filePath) {
-        return isSpace(filePath) ? null : new File(filePath);
+        return Utils.isSpace(filePath) ? null : new File(filePath);
     }
 
     /**
@@ -131,7 +131,7 @@ public final class FileUtils {
         // file doesn't exist then return false
         if (!file.exists()) return false;
         // the new name is space then return false
-        if (isSpace(newName)) return false;
+        if (Utils.isSpace(newName)) return false;
         // the new name equals old name then return true
         if (newName.equals(file.getName())) return true;
         File newFile = new File(file.getParent() + File.separator + newName);
@@ -1232,7 +1232,7 @@ public final class FileUtils {
      * @return the md5 of file
      */
     public static String getFileMD5ToString(final String filePath) {
-        File file = isSpace(filePath) ? null : new File(filePath);
+        File file = Utils.isSpace(filePath) ? null : new File(filePath);
         return getFileMD5ToString(file);
     }
 
@@ -1307,7 +1307,7 @@ public final class FileUtils {
      * @return the file's path of directory
      */
     public static String getDirName(final String filePath) {
-        if (isSpace(filePath)) return "";
+        if (Utils.isSpace(filePath)) return "";
         int lastSep = filePath.lastIndexOf(File.separator);
         return lastSep == -1 ? "" : filePath.substring(0, lastSep + 1);
     }
@@ -1330,7 +1330,7 @@ public final class FileUtils {
      * @return the name of file
      */
     public static String getFileName(final String filePath) {
-        if (isSpace(filePath)) return "";
+        if (Utils.isSpace(filePath)) return "";
         int lastSep = filePath.lastIndexOf(File.separator);
         return lastSep == -1 ? filePath : filePath.substring(lastSep + 1);
     }
@@ -1353,7 +1353,7 @@ public final class FileUtils {
      * @return the name of file without extension
      */
     public static String getFileNameNoExtension(final String filePath) {
-        if (isSpace(filePath)) return "";
+        if (Utils.isSpace(filePath)) return "";
         int lastPoi = filePath.lastIndexOf('.');
         int lastSep = filePath.lastIndexOf(File.separator);
         if (lastSep == -1) {
@@ -1383,7 +1383,7 @@ public final class FileUtils {
      * @return the extension of file
      */
     public static String getFileExtension(final String filePath) {
-        if (isSpace(filePath)) return "";
+        if (Utils.isSpace(filePath)) return "";
         int lastPoi = filePath.lastIndexOf('.');
         int lastSep = filePath.lastIndexOf(File.separator);
         if (lastPoi == -1 || lastSep >= lastPoi) return "";
@@ -1459,22 +1459,6 @@ public final class FileUtils {
 
     public interface OnReplaceListener {
         boolean onReplace(File srcFile, File destFile);
-    }
-
-    /**
-     * Return whether the string is null or white space.
-     *
-     * @param s The string.
-     * @return {@code true}: yes<br> {@code false}: no
-     */
-    public static boolean isSpace(final String s) {
-        if (s == null) return true;
-        for (int i = 0, len = s.length(); i < len; ++i) {
-            if (!Character.isWhitespace(s.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**

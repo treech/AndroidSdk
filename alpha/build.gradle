@@ -5,7 +5,7 @@ plugins {
 
 def versionMajor = 0
 def versionMinor = 0
-def versionPatch = 5
+def versionPatch = 1
 
 android {
     compileSdkVersion 30
@@ -58,7 +58,7 @@ dependencies {
 
 ext {
     groupId = 'io.github.treech'
-    description = 'android utils for android'
+    description = 'change views alpha for android'
     gitUrl = 'https://github.com/treech/AndroidSdk'
     authorEmail = 'yeguoqiang6@outlook.com'
     license = 'MIT'
