@@ -45,7 +45,6 @@ public class Utils {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-//    private static final ActivityLifecycleImpl ACTIVITY_LIFECYCLE = new ActivityLifecycleImpl();
     private static final Handler UTIL_HANDLER = new Handler(Looper.getMainLooper());
 
     private static Application sApplication;
