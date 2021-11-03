@@ -13,10 +13,6 @@ import androidx.annotation.Px;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.view.ViewCompat;
 
-
-/**
- * Created by yexiaokang on 2018/11/15.
- */
 public class RoundCornerImageView extends AppCompatImageView {
 
     private int mLeftTopRadius;

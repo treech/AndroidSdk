@@ -145,7 +145,7 @@ public class ToastUtils {
         });
     }
 
-    private static void show(final View view, final int duration) {
+    public static void show(final View view, final int duration) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
