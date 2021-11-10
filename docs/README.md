@@ -86,3 +86,7 @@
 # util
   参考：https://github.com/Blankj/AndroidUtilCode.git
 
+# shimmer views to indicate that views are loading
+ 参考：https://github.com/facebook/shimmer-android
+ 参考：https://github.com/sharish/ShimmerRecyclerView
+

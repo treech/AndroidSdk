@@ -11,10 +11,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -22,30 +22,37 @@ import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.StringRes;
 import androidx.core.app.NotificationManagerCompat;
 
 import java.lang.reflect.Field;
 
-public class ToastUtils {
+public final class ToastUtils {
+
+    private static final int    COLOR_DEFAULT = 0xFEFFFFFF;
+    private static final String NULL          = "null";
+
+    private static IToast iToast;
+    private static int    sGravity     = -1;
+    private static int    sXOffset     = -1;
+    private static int    sYOffset     = -1;
+    private static int    sBgColor     = COLOR_DEFAULT;
+    private static int    sBgResource  = -1;
+    private static int    sMsgColor    = COLOR_DEFAULT;
+    private static int    sMsgTextSize = -1;
 
     private ToastUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
-    private static IToast iToast;
-    private static final String NULL = "null";
-    private static final int COLOR_DEFAULT = 0xFEFFFFFF;
-    private static int sGravity = -1;
-    private static int sXOffset = -1;
-    private static int sYOffset = -1;
-    private static int sBgColor = COLOR_DEFAULT;
-    private static int sBgResource = -1;
-    private static int sMsgColor = COLOR_DEFAULT;
-    private static int sMsgTextSize = -1;
-
-    private static final Handler UTIL_HANDLER = new Handler(Looper.getMainLooper());
-
+    /**
+     * Set the gravity.
+     *
+     * @param gravity The gravity.
+     * @param xOffset X-axis offset, in pixel.
+     * @param yOffset Y-axis offset, in pixel.
+     */
     public static void setGravity(final int gravity, final int xOffset, final int yOffset) {
         sGravity = gravity;
         sXOffset = xOffset;
@@ -88,8 +95,127 @@ public class ToastUtils {
         sMsgTextSize = textSize;
     }
 
+    /**
+     * Show the toast for a short period of time.
+     *
+     * @param text The text.
+     */
+    public static void showShort(final CharSequence text) {
+        show(text == null ? NULL : text, Toast.LENGTH_SHORT);
+    }
+
+    /**
+     * Show the toast for a short period of time.
+     *
+     * @param resId The resource id for text.
+     */
+    public static void showShort(@StringRes final int resId) {
+        show(resId, Toast.LENGTH_SHORT);
+    }
+
+    /**
+     * Show the toast for a short period of time.
+     *
+     * @param resId The resource id for text.
+     * @param args  The args.
+     */
+    public static void showShort(@StringRes final int resId, final Object... args) {
+        show(resId, Toast.LENGTH_SHORT, args);
+    }
+
+    /**
+     * Show the toast for a short period of time.
+     *
+     * @param format The format.
+     * @param args   The args.
+     */
     public static void showShort(final String format, final Object... args) {
         show(format, Toast.LENGTH_SHORT, args);
+    }
+
+    /**
+     * Show the toast for a long period of time.
+     *
+     * @param text The text.
+     */
+    public static void showLong(final CharSequence text) {
+        show(text == null ? NULL : text, Toast.LENGTH_LONG);
+    }
+
+    /**
+     * Show the toast for a long period of time.
+     *
+     * @param resId The resource id for text.
+     */
+    public static void showLong(@StringRes final int resId) {
+        show(resId, Toast.LENGTH_LONG);
+    }
+
+    /**
+     * Show the toast for a long period of time.
+     *
+     * @param resId The resource id for text.
+     * @param args  The args.
+     */
+    public static void showLong(@StringRes final int resId, final Object... args) {
+        show(resId, Toast.LENGTH_LONG, args);
+    }
+
+    /**
+     * Show the toast for a long period of time.
+     *
+     * @param format The format.
+     * @param args   The args.
+     */
+    public static void showLong(final String format, final Object... args) {
+        show(format, Toast.LENGTH_LONG, args);
+    }
+
+    /**
+     * Show custom toast for a short period of time.
+     *
+     * @param layoutId ID for an XML layout resource to load.
+     */
+    public static View showCustomShort(@LayoutRes final int layoutId) {
+        return showCustomShort(getView(layoutId));
+    }
+
+    /**
+     * Show custom toast for a short period of time.
+     *
+     * @param view The view of toast.
+     */
+    public static View showCustomShort(final View view) {
+        show(view, Toast.LENGTH_SHORT);
+        return view;
+    }
+
+    /**
+     * Show custom toast for a long period of time.
+     *
+     * @param layoutId ID for an XML layout resource to load.
+     */
+    public static View showCustomLong(@LayoutRes final int layoutId) {
+        return showCustomLong(getView(layoutId));
+    }
+
+    /**
+     * Show custom toast for a long period of time.
+     *
+     * @param view The view of toast.
+     */
+    public static View showCustomLong(final View view) {
+        show(view, Toast.LENGTH_LONG);
+        return view;
+    }
+
+    /**
+     * Cancel the toast.
+     */
+    public static void cancel() {
+        if (iToast != null) {
+            iToast.cancel();
+        }
     }
 
     private static void show(final int resId, final int duration) {
@@ -121,7 +247,7 @@ public class ToastUtils {
     }
 
     private static void show(final CharSequence text, final int duration) {
-        runOnUiThread(new Runnable() {
+        Utils.runOnUiThread(new Runnable() {
             @SuppressLint("ShowToast")
             @Override
             public void run() {
@@ -145,8 +271,8 @@ public class ToastUtils {
         });
     }
 
-    public static void show(final View view, final int duration) {
-        runOnUiThread(new Runnable() {
+    private static void show(final View view, final int duration) {
+        Utils.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 cancel();
@@ -205,18 +331,10 @@ public class ToastUtils {
         }
     }
 
-    public static void cancel() {
-        if (iToast != null) {
-            iToast.cancel();
-        }
-    }
-
-    public static void runOnUiThread(final Runnable runnable) {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            runnable.run();
-        } else {
-            UTIL_HANDLER.post(runnable);
-        }
+    private static View getView(@LayoutRes final int layoutId) {
+        LayoutInflater inflate =
+                (LayoutInflater) Utils.getApp().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return inflate.inflate(layoutId, null);
     }
 
     static class ToastFactory {
@@ -296,7 +414,7 @@ public class ToastUtils {
 
     static class ToastWithoutNotification extends AbsToast {
 
-        private View mView;
+        private View          mView;
         private WindowManager mWM;
 
         private WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
@@ -325,7 +443,6 @@ public class ToastUtils {
             }, 300);
         }
 
-        @SuppressLint("WrongConstant")
         private void realShow() {
             if (mToast == null) return;
             mView = mToast.getView();
