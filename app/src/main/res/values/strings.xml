@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidSdk</string>
+    <string name="ads_toast">获取奖励失败\n请重新观看视频获取奖励</string>
 </resources>

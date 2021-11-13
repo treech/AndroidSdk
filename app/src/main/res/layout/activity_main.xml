@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#009456"
         android:orientation="vertical"
         android:showDividers="middle">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Seekbar"
-            android:textColor="?colorPrimary"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="showToast1"
+            android:onClick="showToast1"
+            android:textColor="@color/purple_200"
             android:textSize="20sp" />
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            style="@style/Widget.AppCompat.CompoundButton.RadioButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="showToast2"
+            android:onClick="showToast2"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp" />
 
-        <io.github.treech.roundImage.CircleImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/home_group_photo_restoration"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="showToast3"
+            android:onClick="showToast3"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp" />
     </LinearLayout>
 </ScrollView>
