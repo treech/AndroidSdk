@@ -14,6 +14,10 @@ import java.util.Locale;
 
 public class ViewUtils {
 
+    private ViewUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     /**
      * Set the enabled state of this view.
      *

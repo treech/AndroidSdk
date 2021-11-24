@@ -9,6 +9,10 @@ import java.util.IllegalFormatException;
 
 public class StringUtils {
 
+    private StringUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
+
     /**
      * Format the string.
      *
