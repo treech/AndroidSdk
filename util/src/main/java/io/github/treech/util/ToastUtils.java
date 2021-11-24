@@ -1,10 +1,13 @@
 package io.github.treech.util;
 
+import static io.github.treech.util.ImageUtils.view2Bitmap;
+import static io.github.treech.util.ViewUtils.isLayoutRtl;
+import static io.github.treech.util.ViewUtils.layoutId2View;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
@@ -16,10 +19,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -33,7 +34,6 @@ import android.widget.Toast;
 import androidx.annotation.CallSuper;
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
-import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -47,7 +47,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.util.Locale;
 
 public final class ToastUtils {
 
@@ -881,65 +880,6 @@ public final class ToastUtils {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public static boolean isGrantedDrawOverlays() {
         return Settings.canDrawOverlays(Utils.getApp());
-    }
-
-    public static View layoutId2View(@LayoutRes final int layoutId) {
-        LayoutInflater inflate =
-                (LayoutInflater) Utils.getApp().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        return inflate.inflate(layoutId, null);
-    }
-
-    /**
-     * Return whether horizontal layout direction of views are from Right to Left.
-     *
-     * @return {@code true}: yes<br>{@code false}: no
-     */
-    public static boolean isLayoutRtl() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            Locale primaryLocale;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                primaryLocale = Utils.getApp().getResources().getConfiguration().getLocales().get(0);
-            } else {
-                primaryLocale = Utils.getApp().getResources().getConfiguration().locale;
-            }
-            return TextUtils.getLayoutDirectionFromLocale(primaryLocale) == View.LAYOUT_DIRECTION_RTL;
-        }
-        return false;
-    }
-
-    /**
-     * View to bitmap.
-     *
-     * @param view The view.
-     * @return bitmap
-     */
-    public static Bitmap view2Bitmap(final View view) {
-        if (view == null) return null;
-        boolean drawingCacheEnabled = view.isDrawingCacheEnabled();
-        boolean willNotCacheDrawing = view.willNotCacheDrawing();
-        view.setDrawingCacheEnabled(true);
-        view.setWillNotCacheDrawing(false);
-        Bitmap drawingCache = view.getDrawingCache();
-        Bitmap bitmap;
-        if (null == drawingCache || drawingCache.isRecycled()) {
-            view.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-            view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
-            view.buildDrawingCache();
-            drawingCache = view.getDrawingCache();
-            if (null == drawingCache || drawingCache.isRecycled()) {
-                bitmap = Bitmap.createBitmap(view.getMeasuredWidth(), view.getMeasuredHeight(), Bitmap.Config.RGB_565);
-                Canvas canvas = new Canvas(bitmap);
-                view.draw(canvas);
-            } else {
-                bitmap = Bitmap.createBitmap(drawingCache);
-            }
-        } else {
-            bitmap = Bitmap.createBitmap(drawingCache);
-        }
-        view.setWillNotCacheDrawing(willNotCacheDrawing);
-        view.setDrawingCacheEnabled(drawingCacheEnabled);
-        return bitmap;
     }
 
     /**
