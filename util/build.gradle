@@ -4,8 +4,8 @@ plugins {
 }
 
 def versionMajor = 0
-def versionMinor = 0
-def versionPatch = 9
+def versionMinor = 1
+def versionPatch = 0
 
 android {
     compileSdkVersion 30
@@ -65,5 +65,5 @@ ext {
     version = "${versionMajor}.${versionMinor}.${versionPatch}"
 }
 
-apply from: '../publish.gradle'
-//apply from: '../publishLocal.gradle'
+//apply from: '../publish.gradle'
+apply from: '../publishLocal.gradle'
