@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
@@ -127,6 +128,41 @@ public class ShadowLayout extends FrameLayout {
         }
     }
 
+    public void setStartColor(@ColorInt int color) {
+        this.startColor = color;
+        invalidate();
+    }
+
+    public void setCenterColor(@ColorInt int color) {
+        this.centerColor = color;
+        invalidate();
+    }
+
+    public void setEndColor(@ColorInt int color) {
+        this.endColor = color;
+        invalidate();
+    }
+
+    public void setAngle(int angle) {
+        this.angle = angle;
+        invalidate();
+    }
+
+    public void setGradientColor(@ColorInt int startColor, @ColorInt int endColor) {
+        setGradientColor(startColor,endColor,0);
+    }
+
+    public void setGradientColor(@ColorInt int startColor,@ColorInt int endColor,int angle) {
+        setGradientColor(startColor,-101,endColor,angle);
+    }
+
+    public void setGradientColor(@ColorInt int startColor,int centerColor,@ColorInt int endColor,int angle) {
+        this.startColor = startColor;
+        this.centerColor = centerColor;
+        this.endColor = endColor;
+        this.angle = angle;
+        invalidate();
+    }
 
     //解决xml设置clickable = false时。代码设置true时，点击事件无效的bug
     private OnClickListener onClickListener;
